@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Averia+Serif+Libre&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Averia Serif Libre', serif;
+            font-family: 'Averia Serif Libre', serif; /* Default body font */
             color: #0D0A0A; /* Warm Black */
             background-color: #EDE8E3; /* White Stone */
         }
@@ -30,6 +30,9 @@
         }
         .tile-bg-3 {
             background-color: #001733; /* Midnight Blue */
+        }
+        .tile-bg-4 { /* New tile background color */
+            background-color: #CF082B; /* Scarlet, or pick another brand color */
         }
         .text-scarlet {
             color: #CF082B;
@@ -116,6 +119,95 @@
         .sop-detail-section ul {
             list-style-type: disc;
             margin-left: 1.5rem;
+        }
+
+        /* Styles for the Suicide Protocol Page when loaded dynamically */
+        /* These styles will apply to the content loaded from suicide-protocol.html */
+        .suicide-protocol-container {
+            font-family: 'Averia Serif Libre', serif; /* Default body font */
+            background-color: #EDE8E3; /* Stone White from Brand Guidelines */
+            color: #0D0A0A; /* Warm Black from Brand Guidelines */
+        }
+        .suicide-protocol-container .poster-container {
+            background-color: #ffffff; /* White background for content area */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid #CF082B; /* Scarlet from Brand Guidelines */
+            overflow: hidden; /* Ensure rounded corners clip content */
+            margin: 0 auto; /* Center the container */
+        }
+        .suicide-protocol-container .school-logo {
+            margin-bottom: 20px;
+        }
+        .suicide-protocol-container .school-logo img {
+            max-width: 150px; /* Adjust size as needed */
+            height: auto;
+            margin: 0 auto; /* Center the image */
+        }
+        .suicide-protocol-container h1 {
+            font-family: 'Instrument Sans', sans-serif; /* Main heading font */
+            font-weight: 700; /* Bold for main headings */
+            text-transform: uppercase; /* All caps as per guidelines */
+            color: #0D0A0A; /* Warm Black */
+        }
+        .suicide-protocol-container h2 {
+            font-family: 'Instrument Sans', sans-serif; /* Subheading font */
+            font-weight: 600; /* Semi-Bold for subheadings */
+            color: #0D0A0A; /* Warm Black */
+        }
+        .suicide-protocol-container .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #0D0A0A; /* Warm Black for headings */
+        }
+        .suicide-protocol-container .section-header svg {
+            width: 40px;
+            height: 40px;
+            fill: #CF082B; /* Scarlet for icons */
+        }
+        .suicide-protocol-container .list-item {
+            display: flex;
+            align-items: flex-start;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .suicide-protocol-container .list-item svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            margin-top: 4px; /* Align icon with text */
+            fill: #CF082B; /* Scarlet for checkmarks */
+        }
+        .suicide-protocol-container .key-contacts {
+            background-color: rgba(207, 8, 43, 0.1); /* Light Scarlet tint */
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 2px dashed #CF082B; /* Scarlet dashed border */
+        }
+        .suicide-protocol-container .key-contacts h3 {
+            color: #0D0A0A; /* Warm Black */
+            margin-bottom: 15px;
+        }
+        .suicide-protocol-container .key-contacts p {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #0D0A0A; /* Warm Black */
+        }
+        .suicide-protocol-container .disclaimer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #0D0A0A; /* Warm Black */
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
         }
     </style>
 </head>
@@ -460,7 +552,7 @@
                     <p class="text-lg text-warm-black">Your quick reference guide for essential boarding information.</p>
                 </section>
 
-                <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                     <div class="tile-bg-1 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="navigateTo('sops')">
                         <h3 class="text-3xl font-bold mb-2">SOPs</h3>
                         <p class="text-lg">Standard Operating Procedures</p>
@@ -472,6 +564,10 @@
                     <div class="tile-bg-3 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="navigateTo('contact')">
                         <h3 class="text-3xl font-bold mb-2">Important Phone Numbers</h3>
                         <p class="text-lg">(Data to be detailed later)</p>
+                    </div>
+                    <div class="tile-bg-4 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="window.location.href = 'suicide-protocol.html';">
+                        <h3 class="text-3xl font-bold mb-2">Suicide Protocol</h3>
+                        <p class="text-lg">Immediate Response Guidelines</p>
                     </div>
                 </section>
             `;
@@ -575,7 +671,7 @@
         }
 
         // Function to handle navigation
-        function navigateTo(page, sopId = null) {
+        async function navigateTo(page, sopId = null) {
             console.log('Navigating to:', page, 'with SOP ID:', sopId);
             const appContent = document.getElementById('app-content');
             // Update the hash only if it's a new page or SOP detail (though SOP detail is now handled internally)
@@ -591,13 +687,13 @@
                 case 'sops':
                     renderSopsPage();
                     break;
-                // No longer need a separate 'sop-detail' case as it's handled by toggleSopDetail
                 case 'forms':
                     renderPlaceholderPage('Low Risk Forms', 'This page will contain forms for low-risk situations. Data will be added here later.');
                     break;
                 case 'contact':
                     renderPlaceholderPage('Important Phone Numbers', 'This page will list important phone numbers for the boarding community. Data will be detailed here later.');
                     break;
+                // 'suicide-protocol' case is now handled by direct href change on the tile itself
                 default:
                     renderHomePage(); // Fallback to home
             }
@@ -621,7 +717,9 @@
                 navigateTo('forms');
             } else if (hash === 'contact') {
                 navigateTo('contact');
-            } else {
+            }
+            // No need to handle 'suicide-protocol' hash here as it's a full page load
+            else {
                 navigateTo('home');
             }
         });
@@ -641,7 +739,9 @@
                 navigateTo('forms');
             } else if (hash === 'contact') {
                 navigateTo('contact');
-            } else {
+            }
+            // No need to handle 'suicide-protocol' hash here as it's a full page load
+            else {
                 navigateTo('home');
             }
         });
