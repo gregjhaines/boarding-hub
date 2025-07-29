@@ -209,6 +209,38 @@
             border-top: 1px solid #e2e8f0;
             padding-top: 20px;
         }
+        /* Styles for the After-Hours Contacts Page when loaded dynamically */
+        .after-hours-contacts-container {
+            font-family: 'Averia Serif Libre', serif; /* Default body font */
+            background-color: #ffffff; /* White background for content area */
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid #82ADBF; /* Saxe Blue from Brand Guidelines */
+            overflow: hidden; /* Ensure rounded corners clip content */
+            margin: 0 auto; /* Center the container */
+        }
+        .after-hours-contacts-container h2 {
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 700;
+            color: #001733;
+        }
+        .after-hours-contacts-container p {
+            color: #0D0A0A;
+        }
+        .after-hours-contacts-container .bg-white {
+            background-color: #EDE8E3; /* White Stone for inner box */
+            border: 2px dashed #CF082B; /* Scarlet dashed border */
+        }
+        .after-hours-contacts-container .text-scarlet {
+            color: #CF082B;
+        }
+        .after-hours-contacts-container .text-saxe-blue {
+            color: #82ADBF;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -716,7 +748,7 @@
                         </a>
 
                         <!-- Important Contacts Tile (with after-hours link) -->
-                        <a href="#after-hours-contacts" class="block tile-bg-3 rounded-lg p-6 shadow-lg hover-scale transition duration-300 ease-in-out text-center">
+                        <a href="after-hours-contacts.html" class="block tile-bg-3 rounded-lg p-6 shadow-lg hover-scale transition duration-300 ease-in-out text-center">
                             <h3 class="text-white-stone text-2xl font-bold mb-2">Important Contacts</h3>
                             <p class="text-white-stone text-opacity-80">Access key contact information, including after-hours support.</p>
                         </a>
@@ -733,12 +765,16 @@
             attachNavigationListeners();
         }
 
-        // Function to load content based on hash
-        async function loadContent(hash) {
+        // Function to load content based on hash or external URL
+        async function loadContent(path) { // Renamed 'hash' to 'path' for clarity
             const appContent = document.getElementById('app-content');
-            let content = '';
+            
+            // Clear content and show loading indicator if fetching external file
+            if (path.endsWith('.html')) { // Only fetch if it's an external HTML
+                appContent.innerHTML = `<div class="text-center py-10 text-xl text-midnight-blue">Loading content...</div>`;
+            }
 
-            switch (hash) {
+            switch (path) {
                 case '#home':
                     renderHome();
                     break;
@@ -746,7 +782,6 @@
                     renderSOPs();
                     break;
                 case '#forms':
-                    // Placeholder for Forms content
                     appContent.innerHTML = `
                         <section id="forms-section" class="mb-12">
                             <h2 class="text-3xl font-bold text-midnight-blue mb-6 text-center">Forms</h2>
@@ -758,11 +793,8 @@
                             </ul>
                         </section>
                     `;
-                    // Re-attach event listeners after rendering forms content
-                    attachNavigationListeners();
                     break;
                 case '#contact':
-                    // Placeholder for Contact content
                     appContent.innerHTML = `
                         <section id="contact-section" class="mb-12">
                             <h2 class="text-3xl font-bold text-midnight-blue mb-6 text-center">Contact Us</h2>
@@ -772,54 +804,41 @@
                                 <p class="text-warm-black mb-2"><strong>Girls' House Director:</strong> Jane Smith - <a href="tel:+641234568" class="text-saxe-blue hover:underline">+64 1 234 568</a></p>
                                 <p class="text-warm-black mb-2"><strong>Boys' House Director:</strong> Peter Jones - <a href="tel:+641234569" class="text-saxe-blue hover:underline">+64 1 234 569</a></p>
                                 <p class="text-warm-black mb-2"><strong>Health Centre:</strong> <a href="tel:+641234570" class="text-saxe-blue hover:underline">+64 1 234 570</a></p>
-                                <p class="text-warm-black mt-4">For **after-hours emergencies**, please refer to the <a href="#after-hours-contacts" class="text-scarlet hover:underline font-bold">After-Hours Contacts page</a>.</p>
+                                <p class="text-warm-black mt-4">For **after-hours emergencies**, please refer to the <a href="after-hours-contacts.html" class="text-scarlet hover:underline font-bold">After-Hours Contacts page</a>.</p>
                             </div>
                         </section>
                     `;
-                    // Re-attach event listeners after rendering contact content
-                    attachNavigationListeners();
                     break;
                 case '#suicide-protocol':
-                    // Load suicide-protocol.html content from embedded string
                     appContent.innerHTML = `<div class="suicide-protocol-container">${suicideProtocolHtmlContent}</div>`;
-                    // Re-attach event listeners after rendering suicide protocol content
-                    attachNavigationListeners();
                     break;
-                case '#after-hours-contacts':
-                    // Placeholder for After-Hours Contacts content
-                    appContent.innerHTML = `
-                        <section id="after-hours-contacts-section" class="mb-12">
-                            <button onclick="loadContent('#home')" class="mb-4 px-4 py-2 bg-saxe-blue text-white-stone rounded-lg shadow hover:bg-midnight-blue transition duration-300 ease-in-out flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                                Back to Home
-                            </button>
-                            <h2 class="text-3xl font-bold text-midnight-blue mb-6 text-center">After-Hours Contacts</h2>
-                            <p class="text-lg text-warm-black mb-4">For urgent matters outside of regular school hours, please use the following contacts:</p>
-                            <div class="bg-white p-6 rounded-lg shadow-md border-2 border-scarlet">
-                                <p class="text-warm-black mb-2"><strong>Duty House Director (On Call):</strong> <span class="font-bold">0800 555 1234</span></p>
-                                <p class="text-warm-black mb-2"><strong>Emergency Services (Police, Fire, Ambulance):</strong> <span class="font-bold text-scarlet">111</span> (New Zealand)</p>
-                                <p class="text-warm-black mb-2"><strong>Healthline (for health advice):</strong> <span class="font-bold">0800 611 116</span></p>
-                                <p class="text-warm-black mb-2"><strong>Youthline (for youth support):</strong> <span class="font-bold">0800 376 633</span> or text <span class="font-bold">234</span></p>
-                                <p class="text-warm-black mt-4 text-sm italic">Please reserve these contacts for genuine emergencies or urgent situations.</p>
-                            </div>
-                        </section>
-                    `;
-                    // Re-attach event listeners after rendering after-hours content
-                    attachNavigationListeners();
+                case 'after-hours-contacts.html': // This case will handle the external file fetch
+                    try {
+                        const response = await fetch('after-hours-contacts.html');
+                        if (response.ok) {
+                            const html = await response.text();
+                            appContent.innerHTML = `<div class="after-hours-contacts-container">${html}</div>`; // Wrap in a container for styling if needed
+                        } else {
+                            appContent.innerHTML = `<p class="text-red-500 text-center py-10">Failed to load After-Hours Contacts content. Error: ${response.status}</p>`;
+                        }
+                    } catch (error) {
+                        console.error('Error loading after-hours-contacts.html:', error);
+                        appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading After-Hours Contacts content.</p>`;
+                    }
                     break;
                 default:
                     renderHome(); // Default to home if hash is not recognized
             }
+            // Re-attach event listeners after content is loaded
+            attachNavigationListeners();
             // Scroll to top of content
             appContent.scrollIntoView({ behavior: 'smooth' });
         }
 
         // Function to attach event listeners to navigation links (including tiles)
         function attachNavigationListeners() {
-            // Select all <a> tags that have a href starting with '#'
-            document.querySelectorAll('a[href^="#"]').forEach(link => {
+            // Select all <a> tags that have a href starting with '#' or ending with '.html'
+            document.querySelectorAll('a[href^="#"], a[href$=".html"]').forEach(link => {
                 // Remove existing listener to prevent duplicates if called multiple times
                 link.removeEventListener('click', handleNavigationClick);
                 // Add new listener
@@ -829,13 +848,26 @@
 
         function handleNavigationClick(e) {
             e.preventDefault(); // Prevent default link behaviour
-            const hash = this.getAttribute('href');
-            loadContent(hash);
+            const path = this.getAttribute('href'); // Use 'path' as it can be a hash or a file name
+            loadContent(path);
+            // Update URL hash for direct linking/back button support
+            if (path.startsWith('#')) {
+                window.location.hash = path;
+            } else {
+                // For external HTML files, we can't change the hash to reflect the external file
+                // without actually navigating, which we are preventing.
+                // A more advanced router would handle this, but for now, we just load the content.
+            }
         }
 
         // Initial load of content and attachment of listeners
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash) {
+            // Check if there's an initial hash or if it's a direct load of the index.html
+            // If the URL ends with 'after-hours-contacts.html', load that content directly.
+            const currentPath = window.location.pathname.split('/').pop();
+            if (currentPath === 'after-hours-contacts.html') {
+                loadContent('after-hours-contacts.html');
+            } else if (window.location.hash) {
                 loadContent(window.location.hash);
             } else {
                 renderHome();
