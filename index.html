@@ -3,200 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>St. Peter's Boarding Community Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Averia+Serif+Libre&display=swap" rel="stylesheet">
+    <title>St. Peter's Boarding Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Averia+Serif+Libre&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles based on St. Peter's Brand Guidelines */
-        :root {
-            --scarlet: #CF082B;
-            --white-stone: #EDE8E3;
-            --warm-black: #0D0A0A;
-            --midnight-blue: #001733;
-            --saxe-blue: #82ADBF;
-        }
-
         body {
-            font-family: 'Averia Serif Libre', serif; /* Body text font */
-            background-color: var(--white-stone);
-            color: var(--warm-black);
+            font-family: 'Averia Serif Libre', serif;
+            color: #0D0A0A; /* Warm Black */
+            background-color: #EDE8E3; /* White Stone */
         }
-
-        h1, h2 {
-            font-family: 'Instrument Sans', sans-serif; /* Headings font */
-            text-transform: uppercase; /* Main headings in all caps */
-            color: var(--midnight-blue);
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Instrument Sans', sans-serif;
+            text-transform: uppercase;
         }
-
-        .tile {
-            background-color: white;
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            cursor: pointer;
-            border: 2px solid var(--saxe-blue); /* Add a border for definition */
+        .header-bg {
+            background-color: #001733; /* Midnight Blue */
         }
-
-        .tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        .footer-bg {
+            background-color: #001733; /* Midnight Blue */
         }
-
-        .tile-title {
-            color: var(--scarlet); /* Scarlet for a pop of color */
-            font-weight: 600; /* Semi-Bold for subheadings */
+        .tile-bg-1 {
+            background-color: #CF082B; /* Scarlet */
+        }
+        .tile-bg-2 {
+            background-color: #82ADBF; /* Saxe Blue */
+        }
+        .tile-bg-3 {
+            background-color: #001733; /* Midnight Blue */
+        }
+        .text-scarlet {
+            color: #CF082B;
+        }
+        .text-white-stone {
+            color: #EDE8E3;
+        }
+        .text-warm-black {
+            color: #0D0A0A;
+        }
+        .text-saxe-blue {
+            color: #82ADBF;
+        }
+        .text-midnight-blue {
+            color: #001733;
+        }
+        .border-scarlet {
+            border-color: #CF082B;
+        }
+        .hover-scale:hover {
+            transform: scale(1.03);
+        }
+        .sop-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background-color: #EDE8E3; /* White Stone */
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            color: #0D0A0A;
+        }
+        .sop-link:hover {
+            background-color: #82ADBF; /* Saxe Blue */
+            transform: translateX(5px);
+        }
+        .sop-link h3 {
+            color: #001733; /* Midnight Blue */
+            font-size: 1.125rem;
+        }
+        .sop-link p {
+            font-size: 0.875rem;
+            color: #0D0A0A;
+        }
+        .sop-detail-section h2 {
+            color: #CF082B; /* Scarlet */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
             font-size: 1.5rem;
         }
-
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
+        .sop-detail-section h3 {
+            color: #001733; /* Midnight Blue */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
         }
-
-        .modal-content {
-            background-color: var(--white-stone);
-            margin: auto;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            width: 90%; /* Responsive width */
-            max-width: 900px; /* Max width for larger screens */
-            height: 90%; /* Responsive height */
-            display: flex;
-            flex-direction: column;
-            position: relative;
+        .sop-detail-section p, .sop-detail-section ul {
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
-
-        .close-button {
-            color: var(--warm-black);
-            font-size: 2rem;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-            transition: color 0.2s ease-in-out;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: var(--scarlet);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .iframe-container {
-            flex-grow: 1; /* Allow iframe to take available space */
-            width: 100%;
-            display: flex; /* Use flex to center iframe */
-            justify-content: center;
-            align-items: center;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 0.5rem;
-        }
-
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .grid-cols-1-md-3 {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .sop-detail-section ul {
+            list-style-type: disc;
+            margin-left: 1.25rem;
         }
     </style>
 </head>
-<body class="p-6">
+<body class="min-h-screen flex flex-col">
 
-    <div class="container mx-auto py-8">
-        <h1 class="text-4xl lg:text-5xl font-bold text-center mb-12">St. Peter's Boarding Community Dashboard</h1>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Tile 1: Boarding SOPs -->
-            <div id="sop-tile" class="tile p-6 flex flex-col items-center justify-center text-center">
-                <h2 class="tile-title mb-4">Boarding SOPs</h2>
-                <p class="text-lg">Click to view the Standard Operating Procedures.</p>
+    <!-- Header -->
+    <header class="header-bg text-white-stone p-4 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-2 md:mb-0">
+                <!-- St. Peter's Crest - Placeholder SVG -->
+                <svg class="w-12 h-12 mr-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="100" height="100" fill="#CF082B" rx="10"></rect>
+                    <path d="M50 20 L30 80 H70 L50 20 Z" fill="#EDE8E3"></path>
+                    <circle cx="40" cy="40" r="8" fill="#001733"></circle>
+                    <circle cx="60" cy="40" r="8" fill="#001733"></circle>
+                    <path d="M45 55 Q50 65 55 55" stroke="#001733" stroke-width="3" fill="none"></path>
+                    <text x="50" y="85" font-family="Instrument Sans" font-size="10" fill="#EDE8E3" text-anchor="middle">STRUCTA SAXO</text>
+                </svg>
+                <h1 class="text-2xl md:text-3xl font-bold">St. Peter's Boarding Community</h1>
             </div>
-
-            <!-- Tile 2: Low Risk Forms -->
-            <div id="low-risk-tile" class="tile p-6 flex flex-col items-center justify-center text-center">
-                <h2 class="tile-title mb-4">Low Risk Forms</h2>
-                <p class="text-lg text-gray-600">Data to be uploaded later.</p>
-            </div>
-
-            <!-- Tile 3: Important Phone Numbers -->
-            <div id="phone-numbers-tile" class="tile p-6 flex flex-col items-center justify-center text-center">
-                <h2 class="tile-title mb-4">Important Phone Numbers</h2>
-                <p class="text-lg text-gray-600">Data to be added later.</p>
-            </div>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#home" class="hover:text-scarlet transition duration-300">Home</a></li>
+                    <li><a href="#sops" class="hover:text-scarlet transition duration-300">SOPs</a></li>
+                    <li><a href="#forms" class="hover:text-scarlet transition duration-300">Forms</a></li>
+                    <li><a href="#contact" class="hover:text-scarlet transition duration-300">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <!-- Modal for SOPs PDF -->
-    <div id="sop-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('sop-modal')">&times;</span>
-            <h2 class="text-3xl font-bold text-center mb-4 text-midnight-blue">Boarding SOPs</h2>
-            <div class="iframe-container">
-                <!-- The PDF will be loaded here when the tile is clicked -->
-                <iframe id="sop-iframe" src="" frameborder="0"></iframe>
-            </div>
-        </div>
-    </div>
+    <!-- Main Content Area -->
+    <main id="app-content" class="flex-grow container mx-auto p-4 md:p-8">
+        <!-- Content will be loaded here by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg text-white-stone p-4 text-center shadow-inner mt-8">
+        <p>&copy; 2024 St. Peter's Boarding Community. All rights reserved.</p>
+        <p class="text-sm mt-2">Cambridge, N.Z.</p>
+    </footer>
 
     <script>
-        // Function to open the modal and load the PDF
-        function openSOPModal() {
-            document.getElementById('sop-modal').style.display = 'flex';
-            // Set the PDF source. This assumes the PDF is accessible at this path.
-            // In a real deployment, you would host this PDF on your server.
-            // For this example, we'll use a placeholder or a direct link if available.
-            // Since the user uploaded it, we'll use the contentFetchId.
-            document.getElementById('sop-iframe').src = 'data:application/pdf;base64,' + btoa(unescape(encodeURIComponent(atob('{{uploaded:Boarding SOPs}}'))));
-            // Note: The above line is a placeholder. Directly embedding a local file like this
-            // in a live environment is not standard. You would typically host the PDF
-            // and link to its URL. For this Canvas environment, this is a way to simulate it.
-        }
-
-        // Function to close the modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            // Optionally, clear the iframe src to stop any media or free up resources
-            if (modalId === 'sop-modal') {
-                document.getElementById('sop-iframe').src = '';
-            }
-        }
-
-        // Add event listener to the SOP tile
-        document.getElementById('sop-tile').addEventListener('click', openSOPModal);
-
-        // Close modal when clicking outside the modal content
-        window.addEventListener('click', function(event) {
-            const sopModal = document.getElementById('sop-modal');
-            if (event.target === sopModal) {
-                closeModal('sop-modal');
-            }
-        });
-
-        // Handle keyboard escape key to close modal
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const sopModal = document.getElementById('sop-modal');
-                if (sopModal.style.display === 'flex') {
-                    closeModal('sop-modal');
+        // Define SOP data from the uploaded document
+        const sopsData = {
+            "I. Digital Device Management": {
+                "SOP 1.1: Digital Device Hand in": {
+                    purpose: "To ensure consistent enforcement of digital device curfews to promote healthy sleep habits, reduce distractions during study, and foster in-person social interaction.",
+                    scope: "All boarding students and duty staff in all boarding houses.",
+                    roles: {
+                        "House Directors": "Oversee enforcement, communicate rules, and manage consequences.",
+                        "Duty Staff": "Directly responsible for enforcing the curfew, collecting devices (if applicable), and monitoring compliance.",
+                        "Students": "Responsible for adhering to the curfew and submitting devices as required."
+                    },
+                    procedures: [
+                        { heading: "Hand in Communication", details: "At the start of each term, House Directors clearly communicate digital device hand in times and procedures to all students (e.g., via house meeting, notice board, and Cube Contract). Specific times for different year levels (e.g., Year 9-10: 9:00 PM, Year 11: 9:30 PM, Year 12-13: 10:00 PM - or as per school policy)." },
+                        { heading: "Device Collection/Monitoring", details: "Option A (Collection): At the designated curfew time, students place all personal digital devices (phones, tablets, gaming devices) in a designated, secure collection point in their house (e.g., locked cabinet in common room or House Office). Duty Staff supervise the collection process, ensuring all students comply. Devices are returned at a specified time the following morning (e.g., 7:00 AM). Option B (Self-Management with Checks): For older year levels (e.g., Year 12-13), devices may remain in rooms but must be switched off or placed on silent/airplane mode and stored out of reach (e.g., in a drawer, not under a pillow). Duty Staff conduct random spot checks after curfew to ensure compliance." },
+                        { heading: "Monitoring During Study Periods (Prep)", details: "During designated prep times, recreational digital device use is strictly prohibited. Duty Staff actively supervise prep areas, ensuring students are using devices only for academic purposes." },
+                        { heading: "Consequences for Non-Compliance", details: "First Offence: Device confiscated for 24 hours, warning issued, recorded in house log. Second Offence: Device confiscated for 3 days, parent/caregiver informed, recorded in REACH. Third Offence: Device confiscated for 1 week, meeting with House Director and student, parent/caregiver informed, recorded in REACH, potential further disciplinary action as per Disciplinary Consequences Policy. Repeated non-compliance may lead to permanent device restrictions or other disciplinary measures." },
+                        { heading: "Reporting", details: "All instances of non-compliance and subsequent actions are logged in the House Log and REACH." },
+                        { heading: "Communication Protocols", details: "Clear communication to students and parents about the curfew rules and consequences. Parents informed promptly of repeated non-compliance." }
+                    ]
+                },
+                "SOP 1.2: Digital Citizenship Education & Responsible Use": {
+                    purpose: "To educate students on responsible digital citizenship, promoting safe, ethical, and healthy use of technology.",
+                    scope: "All boarding students, House Directors, and relevant school staff (e.g., IT, Counsellor).",
+                    roles: {
+                        "Director of Boarding": "Oversees the integration of digital citizenship into boarding life.",
+                        "House Directors": "Facilitate discussions, reinforce principles, and address digital well-being concerns.",
+                        "IT Department": "Provides expertise on online safety and security.",
+                        "Counsellor": "Addresses mental health aspects of digital use (e.g., screen time, social media pressure)."
+                    },
+                    procedures: [
+                        { heading: "Induction Program Integration", details: "During new student induction, dedicate a session to digital citizenship, covering: Online safety and privacy. Cyberbullying prevention and reporting (referencing Anti-Bullying Policy). Responsible social media use. Impact of screen time on sleep and academic performance. School's Digital Devices Policy and expectations." },
+                        { heading: "Regular House Discussions/Workshops", details: "House Directors facilitate regular (e.g., termly) discussions or short workshops on digital citizenship topics. Utilise resources from reputable organisations (e.g., Netsafe NZ, Common Sense Media). Encourage students to share experiences and best practices." },
+                        { heading: "Addressing Misuse & Online Safety Incidents", details: "When digital device misuse occurs (e.g., inappropriate content, cyberbullying), use it as a teachable moment. Follow the Behaviour Management and Disciplinary Consequences Policies, but also engage in restorative conversations to educate on impact. For explicit material posted online: If a student expresses concern about explicit material posted about them online, staff should: Provide immediate support and reassurance. Advise the student not to engage with the content or the person who posted it. Inform the House Director and Director of Boarding immediately. Guide the student (or act on their behalf, with consent) to utilize resources like TakeItDown.nz (or other relevant official platforms like Netsafe NZ) , which can assist in removing non-consensual intimate images or videos. Ensure the student has access to counselling support." },
+                        { heading: "Promoting Digital Well-being", details: "Encourage 'digital detox' periods (e.g., during weekend activities, specific evenings). Promote alternative activities that do not involve screens. Educate students on managing notifications and setting personal boundaries for device use." },
+                        { heading: "Parental Communication", details: "Share resources and information with parents on supporting healthy digital habits at home. Collaborate with parents when significant digital misuse issues or online safety incidents arise." },
+                        { heading: "Communication Protocols", details: "Digital citizenship guidelines prominently displayed in houses. Discussions and workshops announced in advance. Parents informed of educational initiatives and any serious incidents, especially those involving online safety." },
+                        { heading: "Required Documentation/Record Keeping", details: "Records of digital citizenship sessions delivered. Incident reports for digital misuse or online safety incidents (as per Behaviour Incident Reporting SOP)." },
+                        { heading: "Review Cycle", details: "Annually, or more frequently as new digital trends and challenges emerge." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Digital Devices Policy, Anti-Bullying, Harassment and Discrimination Policy, Behaviour Management Policy, Child and Young Person Protection Policy." }
+                    ]
+                }
+            },
+            "II. Emergency & Crisis Management": {
+                "SOP 2.1: Emergency Evacuation Protocol": {
+                    purpose: "To ensure the safe and orderly evacuation of all students and staff from boarding houses in the event of an emergency (e.g., fire, earthquake, gas leak).",
+                    scope: "All boarding staff, students, and visitors within boarding houses.",
+                    roles: {
+                        "House Director (or Senior Duty Staff)": "Overall command, initiates evacuation, ensures all areas are checked, accounts for all individuals.",
+                        "Duty Staff": "Direct students, conduct sweep of assigned areas, assist vulnerable individuals, report to command.",
+                        "Students": "Follow instructions, proceed to assembly point, remain calm.",
+                        "Fire Wardens (Designated Staff)": "Assist with safe exit, check designated areas."
+                    },
+                    procedures: [
+                        { heading: "Alarm Activation/Notification", details: "Upon hearing the fire alarm or receiving an evacuation instruction (e.g., from House Director, School Management, Emergency Services), all staff and students must immediately initiate evacuation." },
+                        { heading: "Immediate Action", details: "Staff: Direct students to exit calmly and quickly via the nearest safe exit. Do not stop to collect personal belongings. Assist any students with mobility issues or special needs. Conduct a quick visual sweep of assigned areas (e.g., common rooms, corridors, bathrooms) to ensure no one is left behind, but do not re-enter a burning building. Students: Exit immediately and calmly. Follow staff instructions. Do not run or push." },
+                        { heading: "Proceed to Assembly Point", details: "All individuals proceed directly to the designated assembly point for their house (clearly marked on evacuation plans). Walk, do not run." },
+                        { heading: "Roll Call & Accountability", details: "House Director (or Senior Duty Staff) takes a physical roll call of all students present at the assembly point using the most up-to-date roll. Duty Staff report to the House Director on their sweep results and any missing individuals. Any unaccounted individuals are immediately reported to the Director of Boarding and/or emergency services." },
+                        { heading: "Await Further Instructions", details: "Remain at the assembly point until an 'all clear' is given by the House Director, Director of Boarding, or Emergency Services. Do not re-enter the building until authorized." },
+                        { heading: "Communication Protocols", details: "Internal: House Director immediately notifies Director of Boarding and School Management upon evacuation. External: Director of Boarding/School Management liaises with emergency services (111). Parents/caregivers will be informed via standard school communication channels once safety and accountability are confirmed." },
+                        { heading: "Required Documentation/Record Keeping", details: "Evacuation Drill Log (date, time, duration, observations). Incident Report Form for any actual emergency evacuations. Updated student rolls (physical copy at assembly point and digital backup)." },
+                        { heading: "Review Cycle", details: "Annual mandatory drills, and review of procedures after each drill or actual event." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Evacuation Policy, Hazards + Safety Policy." }
+                    ]
+                },
+                "SOP 2.2: Missing Boarding Student Protocol": {
+                    purpose: "To establish a rapid and systematic response protocol for any student discovered to be missing from the boarding house or school grounds when they should be present.",
+                    scope: "All boarding staff, School Management, and Emergency Services.",
+                    roles: {
+                        "Duty Staff (Initial Responder)": "Initiates immediate checks, reports to House Director.",
+                        "House Director": "Leads initial search, coordinates staff, notifies Director of Boarding, liaises with parents/caregivers.",
+                        "Director of Boarding": "Notifies Campus Principal, Police (if necessary), coordinates wider school search, manages external communication.",
+                        "School Management": "Supports search efforts, manages media (if applicable)."
+                    },
+                    procedures: [
+                        { heading: "Initial Discovery (Duty Staff)", details: "Immediately upon discovering a student is missing from a required location (e.g., roll call, prep, lights out, designated area), the Duty Staff member conducts an immediate, thorough check of the student's room, common areas, and immediate house vicinity. Check if the student has signed out via REACH or has authorized leave. Attempt to contact the student via their mobile phone (if permitted)." },
+                        { heading: "Notification to House Director", details: "If the student cannot be immediately located or accounted for within 5 minutes, the Duty Staff member immediately notifies the House Director." },
+                        { heading: "House Director's Immediate Actions", details: "House Director takes charge. Confirms all initial checks have been made. Initiates a systematic search of the entire boarding house, including all rooms, bathrooms, common areas, and immediate outdoor areas around the house. Assigns specific staff members to search designated zones. Checks the student's recent activity (e.g., last known location, friends they were with). Reviews CCTV footage if available and relevant." },
+                        { heading: "Notification to Director of Boarding", details: "If the student is not located within 15 minutes of the initial discovery, the House Director immediately notifies the Director of Boarding." },
+                        { heading: "Director of Boarding's Actions", details: "Director of Boarding takes command of the search. Notifies the Campus Principal. Decides whether to involve Police immediately based on risk assessment (e.g., age of student, known vulnerabilities, suspicious circumstances, duration missing). Generally, Police should be contacted without undue delay if the student's safety is a concern. Coordinates a wider school search, involving additional staff if necessary (e.g., Security, other House Directors). Liaises with parents/caregivers, informing them of the situation and actions being taken. Maintain regular contact." },
+                        { heading: "Police Involvement (if required)", details: "If Police are contacted, provide all available information: student's name, description, last known location, circumstances, any known vulnerabilities or concerns. Cooperate fully with Police instructions." },
+                        { heading: "Resolution & Debrief", details: "Once the student is located, ensure their safety and well-being. Conduct a debrief with the student and relevant staff to understand the circumstances and implement preventative measures. Complete a detailed incident report." },
+                        { heading: "Communication Protocols", details: "Internal: Immediate escalation from Duty Staff -> House Director -> Director of Boarding -> Campus Principal. External: Director of Boarding/Campus Principal communicates with parents/caregivers. Police contacted as per risk assessment. Media managed by School Management only." },
+                        { heading: "Required Documentation/Record Keeping", details: "Missing Boarding Students Incident Report Form. Log of all actions taken, times, and individuals involved. REACH entry for the incident." },
+                        { heading: "Review Cycle", details: "Annually, and after any actual missing student incident." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Missing Boarding Students Policy, Child and Young Person Protection Policy, Routines Policy." }
+                    ]
+                }
+            },
+            "III. Daily Routines & Transitions": {
+                "SOP 3.1: Daily Roll Call Procedure": {
+                    purpose: "To accurately account for all boarding students at designated times, ensuring their safety and presence within the boarding community.",
+                    scope: "All boarding students and duty staff in all boarding houses.",
+                    roles: {
+                        "Duty Staff": "Conducts roll calls, records attendance, identifies and reports missing students.",
+                        "House Director": "Oversees roll call process, addresses attendance issues, follows up on missing students.",
+                        "Students": "Must be present and respond to their name at all scheduled roll calls."
+                    },
+                    procedures: [
+                        { heading: "Preparation", details: "Duty Staff ensure they have the most current student roll for their house (digital via REACH, and a physical backup). Be present at the designated roll call location at least 5 minutes prior to the scheduled time." },
+                        { heading: "Conducting Roll Call", details: "At the precise scheduled time (e.g., 7:00 AM, 4:00 PM), the Duty Staff member: Calls out each student's name clearly. Marks attendance (Present, Absent, Leave, Sick Bay, etc.) in REACH. Confirms any absences against approved leave records. Ensures students respond to their name or are visually confirmed present." },
+                        { heading: "Reporting Absences", details: "If a student is unaccounted for after roll call and not on approved leave, the Duty Staff member immediately: Conducts an initial check of their room and immediate vicinity. Notifies the House Director within 5 minutes of the roll call completion. The House Director then initiates the 'Missing Boarding Student Protocol' (SOP 2.2) if the student cannot be located quickly." },
+                        { heading: "Communication Protocols", details: "Any student absences are immediately communicated to the House Director. Parents/caregivers are informed of unexplained absences as per the 'Missing Boarding Student Protocol' (SOP 2.2)." },
+                        { heading: "Required Documentation/Record Keeping", details: "Accurate and up-to-date student rolls in REACH. House Log entries for any attendance anomalies or follow-up actions." },
+                        { heading: "Review Cycle", details: "Reviewed annually, or as needed to improve efficiency and accuracy." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Attendance Policy, Missing Boarding Student Policy (SOP 2.2), Student Welfare Policy." }
+                    ]
+                },
+                "SOP 3.2: Lights Out Protocol": {
+                    purpose: "To ensure students adhere to designated 'lights out' times, promoting adequate rest and a conducive environment for sleep.",
+                    scope: "All boarding students and duty staff in all boarding houses.",
+                    roles: {
+                        "Duty Staff": "Responsible for enforcing lights out, conducting checks, and addressing non-compliance.",
+                        "House Director": "Oversees enforcement, manages persistent issues, communicates expectations."
+                    },
+                    procedures: [
+                        { heading: "Communication of Times", details: "House Directors clearly communicate 'lights out' times for each year level at the start of each term (e.g., via house meeting, notice board, Cube Contract). Times should align with school policy (e.g., Year 9-10: 9:30 PM, Year 11: 10:00 PM, Year 12-13: 10:30 PM)." },
+                        { heading: "Pre-Lights Out Reminder", details: "Approximately 15-30 minutes before lights out, Duty Staff provide a verbal reminder or announcement to students." },
+                        { heading: "Lights Out Enforcement", details: "At the designated 'lights out' time, Duty Staff: Conduct a walk-through of all student rooms/cubes. Ensure all main lights are off. Remind students to be quiet and settle down. Check for any inappropriate device use (referencing SOP 1.1 Digital Device Hand in)." },
+                        { heading: "Addressing Non-Compliance", details: "If students are not adhering to lights out (e.g., lights on, excessive noise, still active): First Instance: Verbal reminder, explain the importance of sleep. Second Instance: Formal warning, recorded in house log. Third Instance: Device confiscated (if applicable, per SOP 1.1), parent/caregiver informed, recorded in REACH, potential further disciplinary action." },
+                        { heading: "Promoting Sleep Hygiene", details: "Staff encourage good sleep hygiene practices (e.g., avoiding screens before bed, quiet activities, comfortable environment). Address any student concerns about sleep difficulties and refer to appropriate support (e.g., Counsellor, Health Centre)." },
+                        { heading: "Required Documentation/Record Keeping", details: "House Log entries for any non-compliance or persistent issues. REACH entries for significant or repeated non-compliance." },
+                        { heading: "Review Cycle", details: "Annually, or as needed, especially if sleep-related issues become prevalent." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Digital Devices Policy (SOP 1.1), Student Welfare Policy, Health Centre Protocols." }
+                    ]
+                }
+            },
+            "IV. Leave Management": {
+                "SOP 4.1: Electronic Leave Application & Approval": {
+                    purpose: "To establish a clear, efficient, and secure electronic system for students to apply for leave and for staff to manage and approve these requests, ensuring student safety and accurate record-keeping.",
+                    scope: "All boarding students, House Directors, Duty Staff, and relevant school administration.",
+                    roles: {
+                        "Students": "Responsible for submitting timely and accurate leave applications via the designated electronic system (REACH).",
+                        "Parents/Caregivers": "Responsible for approving leave requests electronically via the designated system.",
+                        "House Director": "Reviews, approves/denies leave requests, ensures all necessary information is provided, communicates with parents/students, manages leave in REACH.",
+                        "Duty Staff": "Verifies student departure and return against approved leave in REACH."
+                    },
+                    procedures: [
+                        { heading: "Application Submission (Student)", details: "Students submit leave applications via REACH (or other designated electronic platform) at least 24-48 hours in advance (or as per school policy), providing: Type of leave (e.g., day leave, overnight, weekend). Dates and times of departure and return. Destination and contact details. Name of supervising adult (if applicable). Reason for leave." },
+                        { heading: "Parent/Caregiver Approval", details: "Once submitted, an automated notification is sent to the parent/caregiver via REACH for electronic approval. Parents/caregivers must approve the leave request in the system for it to proceed." },
+                        { heading: "House Director Review & Approval", details: "The House Director reviews the application, checking: Parental approval. Student's academic and behavioural standing. Any conflicting appointments (e.g., school events, medical appointments). Appropriateness of the leave (e.g., safety of destination, suitability of supervising adult). The House Director approves or denies the request in REACH. If denied, a clear reason is provided to the student and parent." },
+                        { heading: "Student Departure", details: "Before departing, the student must: Verbally confirm their leave with the Duty Staff member on duty. Electronically sign out via REACH, confirming their departure time and destination. The Duty Staff member visually confirms the student's departure." },
+                        { heading: "Student Return", details: "Upon return, the student must: Verbally confirm their return with the Duty Staff member on duty. Electronically sign in via REACH, confirming their return time. The Duty Staff member visually confirms the student's return." },
+                        { heading: "Monitoring & Follow-up", details: "Duty Staff regularly monitor REACH for overdue students. If a student is overdue, the 'Missing Boarding Student Protocol' (SOP 2.2) is initiated immediately." },
+                        { heading: "Communication Protocols", details: "Automated notifications via REACH for application submission, approval/denial, and parent approval requests. House Directors communicate directly with parents/students for complex or denied requests. Duty Staff verbally confirm departures/returns." },
+                        { heading: "Required Documentation/Record Keeping", details: "All leave applications, approvals, and sign-in/out records are automatically logged and maintained in REACH. This serves as the official record for auditing and safety purposes." },
+                        { heading: "Review Cycle", details: "Annually, or as needed to enhance efficiency and security of the system." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Leave Policy, Attendance Policy, Missing Boarding Student Protocol (SOP 2.2), Student Welfare Policy." }
+                    ]
+                }
+            },
+            "V. Behaviour Management & Disciplinary Actions": {
+                "SOP 5.1: Behaviour Incident Reporting & Follow-up": {
+                    purpose: "To ensure consistent, fair, and timely reporting and management of student behaviour incidents within the boarding community, promoting a safe and respectful environment.",
+                    scope: "All boarding students and staff.",
+                    roles: {
+                        "Reporting Staff Member": "Documents the incident accurately and promptly.",
+                        "House Director": "Investigates, determines appropriate action, communicates with student/parents, implements consequences, ensures follow-up.",
+                        "Director of Boarding": "Oversees serious incidents, provides guidance, liaises with school leadership, ensures consistency across houses.",
+                        "Student": "Engages in restorative conversations, understands consequences, learns from incident.",
+                        "Parents/Caregivers": "Informed of significant incidents and consequences."
+                    },
+                    procedures: [
+                        { heading: "Incident Discovery & Initial Response", details: "Upon witnessing or being informed of a behaviour incident, the staff member: Ensures immediate safety of all involved. Intervenes appropriately to de-escalate the situation. If minor, addresses it immediately with the student(s) involved (e.g., verbal warning, redirection). If serious or repeated, proceeds to formal reporting." },
+                        { heading: "Formal Incident Reporting", details: "For all serious incidents (e.g., bullying, aggression, significant breaches of rules) or repeated minor incidents, the reporting staff member must: Complete an incident report form in REACH (or designated electronic system) as soon as practicably possible, ideally within 24 hours. Provide factual, objective details: Date, time, location. Students involved (names, year levels). Witnesses (names, if any). Detailed description of the incident (what happened, who did what). Any immediate actions taken by staff. Attach any supporting evidence (e.g., photos of damage, witness statements)." },
+                        { heading: "House Director Review & Investigation", details: "The House Director reviews the incident report promptly. Conducts further investigation as needed (e.g., speaking with students involved, witnesses, other staff). Gathers all relevant information to understand the full context." },
+                        { heading: "Determining & Implementing Consequences", details: "Based on the investigation and in line with the school's Behaviour Management Policy and Disciplinary Consequences Policy, the House Director determines appropriate consequences. Consequences should be proportionate, consistent, and educational. Examples: Restorative conversations, loss of privileges, internal detention, formal warnings, community service, device confiscation (SOP 1.1), financial restitution for damage (SOP 7.2)." },
+                        { heading: "Communication with Students & Parents", details: "The House Director holds a conversation with the student(s) involved, explaining the incident, the consequences, and the expected behavioural changes. For significant incidents, parents/caregivers are informed promptly by the House Director, discussing the incident, consequences, and any support strategies. All communications are logged." },
+                        { heading: "Follow-up & Monitoring", details: "The House Director ensures consequences are implemented. Monitors the student's behaviour post-incident. Provides ongoing support or referral to counselling/pastoral care as needed. Records follow-up actions in REACH." },
+                        { heading: "Escalation", details: "Serious incidents (e.g., those requiring external agency involvement, potential suspension/expulsion) or persistent, unresolved issues are immediately escalated to the Director of Boarding and Campus Principal." },
+                        { heading: "Required Documentation/Record Keeping", details: "All incident reports, investigation notes, communication logs, and consequences are recorded in REACH. This provides a comprehensive, auditable record of all behaviour management actions." },
+                        { heading: "Review Cycle", details: "Incident reports are reviewed regularly by House Directors and the Director of Boarding to identify patterns or areas for intervention. Overall procedures reviewed annually." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Behaviour Management Policy, Disciplinary Consequences Policy, Anti-Bullying, Harassment and Discrimination Policy, Child and Young Person Protection Policy, Digital Devices Policy (SOP 1.1), Damage Reporting & Resolution (SOP 7.2)." }
+                    ]
+                }
+            },
+            "VI. Staff Training & Development": {
+                "SOP 6.1: New Boarding Staff Onboarding & Mandatory Training": {
+                    purpose: "To ensure all new boarding staff are effectively onboarded, understand their roles and responsibilities, and complete all mandatory training requirements to provide a high standard of care and safety.",
+                    scope: "All new boarding staff (full-time, part-time, casual).",
+                    roles: {
+                        "Director of Boarding": "Oversees the onboarding process, ensures all training is completed, assigns mentors.",
+                        "House Directors": "Conduct house-specific induction, provide day-to-day guidance, support new staff.",
+                        "New Staff Member": "Actively participates in all training, seeks clarification, familiarizes themselves with policies and procedures."
+                    },
+                    procedures: [
+                        { heading: "Pre-Arrival & First Day", details: "Director of Boarding ensures new staff receive: Welcome pack (key policies, house information, initial schedule). Access to school systems (email, REACH, learning platforms). Clear reporting lines and initial duties. On first day: Formal welcome, tour of campus and boarding houses. Introduction to key staff members. Review of immediate duties and expectations." },
+                        { heading: "Mandatory Training Completion", details: "Within the first two weeks (or as per school policy), new staff must complete mandatory training, including but not limited to: Child Protection and Safeguarding (annual refresher). First Aid and CPR (valid certification). Fire Safety and Evacuation Procedures (including drills). Health and Safety (general and specific to boarding). Digital Devices Policy (SOP 1.1) and Digital Citizenship (SOP 1.2). Behaviour Management Policy (SOP 5.1). Missing Boarding Student Protocol (SOP 2.2). Specific training on REACH for record-keeping and leave management (SOP 4.1)." },
+                        { heading: "House-Specific Induction", details: "The House Director provides a comprehensive house-specific induction, covering: House routines, schedules, and expectations. Specific student needs and dynamics. Emergency plans and assembly points for the house. Location of essential resources (first aid kits, fire extinguishers, student files). Introduction to all students in the house." },
+                        { heading: "Mentorship & Support", details: "New staff are assigned an experienced mentor (e.g., another House Director or senior Duty Staff) for ongoing support and guidance during their probationary period. Regular check-ins are scheduled with the Director of Boarding and House Director to discuss progress, address concerns, and provide feedback." },
+                        { heading: "Required Documentation/Record Keeping", details: "Record of all completed mandatory training (certificates, attendance logs). Onboarding checklist signed off by new staff and Director of Boarding. Probationary review documentation." },
+                        { heading: "Review Cycle", details: "Onboarding process reviewed annually. Mandatory training requirements reviewed and updated as per regulatory changes or best practice." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Staff Induction Policy, Child Protection Policy, Health and Safety Policy, all relevant SOPs." }
+                    ]
+                },
+                "SOP 6.2: Continuous Professional Development (CPD) for Boarding Staff": {
+                    purpose: "To ensure all boarding staff continuously develop their skills, knowledge, and understanding of best practices in boarding care, student welfare, and educational support.",
+                    scope: "All boarding staff.",
+                    roles: {
+                        "Director of Boarding": "Identifies development needs, coordinates training opportunities, monitors staff CPD.",
+                        "House Directors": "Identify individual and team development needs, encourage participation in CPD.",
+                        "Staff Members": "Actively engage in CPD, identify personal development goals, apply learning to practice."
+                    },
+                    procedures: [
+                        { heading: "Needs Assessment", details: "Annually, the Director of Boarding, in consultation with House Directors and individual staff, identifies professional development needs based on: Performance reviews. Emerging trends in boarding/education. Feedback from students and parents. Changes in policy or legislation. Individual staff interests and career aspirations." },
+                        { heading: "CPD Planning & Provision", details: "A CPD plan is developed annually, outlining: Mandatory refresher training (e.g., Child Protection, First Aid). Internal workshops (e.g., behaviour management strategies, mental health awareness, digital citizenship). External courses, conferences, or webinars. Opportunities for peer observation and mentoring. The school provides resources (time, budget) to support staff participation." },
+                        { heading: "Participation & Application", details: "Staff actively participate in planned CPD activities. Staff are encouraged to apply new knowledge and skills in their daily practice and share insights with colleagues." },
+                        { heading: "Monitoring & Evaluation", details: "The Director of Boarding monitors staff participation in CPD. Effectiveness of CPD is evaluated through: Staff feedback. Observation of practice. Impact on student outcomes and welfare. Adjustments are made to the CPD plan based on evaluation." },
+                        { heading: "Required Documentation/Record Keeping", details: "Individual staff CPD records (courses attended, hours, certifications). Annual CPD plan." },
+                        { heading: "Review Cycle", details: "Annual review of the CPD plan and its effectiveness." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Staff Professional Development Policy, all relevant SOPs." }
+                    ]
+                }
+            },
+            "VII. Facilities Management & Maintenance": {
+                "SOP 7.1: Room/Cube Check Procedure": {
+                    purpose: "To ensure student rooms/cubes are maintained to a safe, clean, and orderly standard, promoting a positive living environment and identifying maintenance needs.",
+                    scope: "All student rooms/cubes in boarding houses and Duty Staff/House Directors.",
+                    roles: {
+                        "Duty Staff": "Conducts daily/regular checks, identifies issues, provides feedback to students.",
+                        "House Director": "Oversees the process, addresses persistent issues, liaises with facilities for maintenance.",
+                        "Students": "Responsible for maintaining cleanliness and order in their assigned room/cube."
+                    },
+                    procedures: [
+                        { heading: "Scheduled Checks", details: "Duty Staff conduct daily (or as per house schedule) room/cube checks, typically during morning routines or after school. Checks are conducted respectfully, ensuring student privacy is maintained where appropriate." },
+                        { heading: "Checklist & Standards", details: "Staff use a consistent checklist (or mental checklist) to assess: General cleanliness (e.g., no rubbish, tidy surfaces). Bed made. Floor clear of clutter. Personal belongings stored neatly. Electrical appliances used safely and appropriately. Any visible damage or maintenance issues." },
+                        { heading: "Feedback to Students", details: "If a room/cube does not meet the expected standard, the Duty Staff member provides immediate, constructive feedback to the student. Students are given a reasonable timeframe to rectify the issues." },
+                        { heading: "Addressing Non-Compliance", details: "Persistent failure to maintain room standards may result in: Verbal warnings. Loss of privileges (e.g., weekend leave restriction). Required cleaning duty. Repeated issues escalated to the House Director." },
+                        { heading: "Reporting Maintenance Issues", details: "Any damage or maintenance issues identified during checks (e.g., leaky tap, broken light, damaged furniture) are immediately reported by the Duty Staff member to the House Director. The House Director then logs the issue with the school's facilities/maintenance department as per SOP 7.2 Damage Reporting & Resolution." },
+                        { heading: "Required Documentation/Record Keeping", details: "House Log entries for persistent room standard issues or significant findings. Maintenance request logs (as per SOP 7.2)." },
+                        { heading: "Review Cycle", details: "Annually, or as needed, to ensure standards are appropriate and process is efficient." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Student Code of Conduct, Damage Reporting & Resolution (SOP 7.2), Facilities Management Policy." }
+                    ]
+                },
+                "SOP 7.2: Damage Reporting & Resolution": {
+                    purpose: "To establish a clear and efficient process for reporting, assessing, and resolving damage to boarding house property, ensuring timely repairs and appropriate accountability.",
+                    scope: "All boarding staff and students, Facilities Department.",
+                    roles: {
+                        "Reporting Individual (Staff/Student)": "Identifies and reports damage promptly.",
+                        "House Director": "Receives reports, assesses severity, logs with facilities, communicates with students/parents regarding accountability.",
+                        "Facilities Department": "Assesses damage, schedules and completes repairs, provides cost estimates.",
+                        "Director of Boarding": "Oversees significant damage cases, ensures consistency in accountability."
+                    },
+                    procedures: [
+                        { heading: "Damage Identification & Initial Report", details: "Any staff member or student who identifies damage to boarding house property (e.g., broken window, damaged furniture, graffiti) must immediately report it to the Duty Staff member or House Director. Initial report should include: Location of damage. Description of damage. Date/time identified. Any known individuals responsible (if applicable)." },
+                        { heading: "House Director Assessment & Logging", details: "The House Director receives the report and: Visually assesses the damage to determine urgency and nature. Logs the damage in the school's maintenance request system (or designated platform) with all relevant details, including photos if possible. Notifies the Facilities Department immediately for urgent repairs (e.g., safety hazard, security breach)." },
+                        { heading: "Investigation & Accountability", details: "If the damage appears to be caused by a student(s) (accidental or deliberate), the House Director investigates to determine responsibility. This may involve speaking with students, witnesses, and reviewing CCTV. If responsibility is determined, the House Director communicates with the student(s) and their parents/caregivers regarding the damage and potential costs for repair/replacement. This aligns with the school's Behaviour Management Policy (SOP 5.1)." },
+                        { heading: "Repair & Resolution", details: "The Facilities Department schedules and completes the necessary repairs. They provide updates on the repair status to the House Director. If costs are to be recovered, the Facilities Department provides an invoice or estimate to the House Director, who then liaises with the school's finance department and parents." },
+                        { heading: "Required Documentation/Record Keeping", details: "Maintenance request logs (date, description, status, resolution). Incident reports (if damage is due to behaviour, linked to SOP 5.1). Records of communication with parents regarding costs." },
+                        { heading: "Review Cycle", details: "Annually, or as needed, to ensure timely repairs and effective accountability." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Facilities Management Policy, Behaviour Management Policy (SOP 5.1), Student Code of Conduct." }
+                    ]
+                }
+            },
+            "VIII. Student Disclosures": {
+                "SOP 8.1: Student Disclosure of Pregnancy Protocol": {
+                    purpose: "To provide a clear, supportive, and confidential protocol for managing student disclosures of pregnancy, ensuring the student's well-being, privacy, and appropriate support.",
+                    scope: "All boarding staff, students, Health Centre staff, Counsellor, School Management.",
+                    roles: {
+                        "Receiving Staff Member": "Listens sensitively, ensures confidentiality, immediately informs House Director.",
+                        "House Director": "Provides immediate support, ensures privacy, liaises with Health Centre/Counsellor, informs Director of Boarding.",
+                        "Health Centre/Counsellor": "Provides medical/counselling support, discusses options, refers to external agencies if needed.",
+                        "Director of Boarding/Campus Principal": "Manages overall school response, ensures appropriate academic/pastoral adjustments, liaises with parents (with consent)."
+                    },
+                    procedures: [
+                        { heading: "Initial Disclosure & Confidentiality", details: "If a student discloses pregnancy to any staff member, the staff member must: Listen sensitively and non-judgmentally. Reassure the student of confidentiality (explaining limits if safety is a concern). Immediately inform the House Director, who will then inform the Director of Boarding. Maintain the student's privacy throughout the process." },
+                        { heading: "Immediate Support & Referral", details: "The House Director, in consultation with the Director of Boarding, ensures the student is immediately connected with the Health Centre staff and/or the School Counsellor. These professionals will provide: Medical assessment and advice. Counselling and emotional support. Discussion of all available options (e.g., continuing pregnancy, adoption, termination) in a neutral and supportive manner. Information about external support agencies (e.g., family planning services, youth health clinics)." },
+                        { heading: "Parental Involvement (with consent)", details: "The student is strongly encouraged to involve their parents/caregivers. With the student's consent, the Director of Boarding or Campus Principal will liaise with parents to discuss the situation and support plan. If the student is reluctant to involve parents, staff will explore the reasons and provide support, while adhering to legal and safeguarding obligations regarding minors." },
+                        { heading: "Academic & Pastoral Adjustments", details: "The school will work with the student to make appropriate academic adjustments (e.g., special assessment conditions, reduced timetable, temporary leave) to support their health and well-being. Pastoral care will be ongoing, ensuring the student feels supported and safe within the boarding community." },
+                        { heading: "Return to School Plan", details: "If the student leaves school temporarily, a clear return-to-school plan will be developed, addressing academic re-integration, ongoing support, and any necessary accommodations." },
+                        { heading: "Required Documentation/Record Keeping", details: "Confidential records maintained by Health Centre/Counsellor. General pastoral notes in REACH (without specific details of pregnancy unless relevant to broader welfare and with student consent). Incident report if any safeguarding concerns arise (e.g., forced pregnancy)." },
+                        { heading: "Review Cycle", details: "Annually, or as needed, to ensure the protocol remains supportive and compliant with current legislation." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Confidentiality Policy, Student Welfare Policy, Health Centre Protocols, Child Protection Policy." }
+                    ]
+                },
+                "SOP 8.2: Self-Harm Disclosure Protocol": {
+                    purpose: "To provide a clear and compassionate protocol for responding to student disclosures of self-harm, ensuring immediate safety, appropriate support, and risk management.",
+                    scope: "All boarding staff, students, Health Centre staff, Counsellor, School Management.",
+                    roles: {
+                        "Receiving Staff Member": "Responds calmly, ensures immediate safety, informs House Director immediately.",
+                        "House Director": "Ensures student safety, initiates risk assessment, liaises with Health Centre/Counsellor, informs Director of Boarding.",
+                        "Health Centre/Counsellor": "Provides immediate medical/psychological assessment, develops safety plan, provides ongoing support, refers to external mental health services if needed.",
+                        "Director of Boarding/Campus Principal": "Oversees overall response, ensures parental involvement (as appropriate), manages external agency liaison (if required)."
+                    },
+                    procedures: [
+                        { heading: "Immediate Response & Safety", details: "If a student discloses self-harm (current or past), the receiving staff member must: Remain calm and non-judgmental. Ensure the student is immediately safe (e.g., remove any means of self-harm). Do not leave the student alone. Immediately inform the House Director (or senior duty staff if House Director is unavailable)." },
+                        { heading: "House Director Actions & Risk Assessment", details: "The House Director: Ensures the student is supervised and safe. Immediately contacts the Health Centre staff and/or School Counsellor. Conducts an initial risk assessment (e.g., immediacy of threat, presence of a plan, history). Informs the Director of Boarding without delay." },
+                        { heading: "Professional Assessment & Safety Plan", details: "Health Centre staff and/or the School Counsellor will conduct a comprehensive assessment of the student's mental state and risk of further self-harm. They will develop a safety plan, which may include: Strategies for managing urges. Identifying triggers. Support networks (staff, friends, family). Regular check-ins. Referral to external mental health services if required." },
+                        { heading: "Parental Involvement", details: "Parents/caregivers must be informed of the self-harm disclosure, typically by the House Director or Director of Boarding, in consultation with the Health Centre/Counsellor. The level of detail shared will balance student confidentiality with the need for parental support and safety. Parents are involved in the development and implementation of the safety plan." },
+                        { heading: "Ongoing Support & Monitoring", details: "The student will receive ongoing pastoral and counselling support. Staff involved in the student's care will be informed on a 'need-to-know' basis to ensure consistent support and monitoring. Regular reviews of the safety plan will occur." },
+                        { heading: "Required Documentation/Record Keeping", details: "Detailed incident report in REACH. Health Centre/Counsellor confidential notes. Safety plan documentation. Records of communication with parents and external agencies. All records are managed with strict confidentiality." },
+                        { heading: "Review Cycle", details: "Reviewed annually, and after any significant self-harm incident, to ensure the protocol is effective and supportive." },
+                        { heading: "Relevant Policy Cross-Reference", details: "Self-Harm | Threat of Suicide | Distress Policy, Child and Young Person Protection Policy, Healthcare Policy, Pastoral Care Policy, Confidentiality Policy (to be developed), Student Welfare Policy." }
+                    ]
                 }
             }
+        };
+
+        // Function to render placeholder pages (including a basic not found)
+        function renderPlaceholderPage(title, content) {
+            const appContent = document.getElementById('app-content');
+            appContent.innerHTML = `
+                <button onclick="navigateTo('home')" class="mb-6 px-4 py-2 bg-saxe-blue text-white-stone rounded-lg shadow hover:bg-midnight-blue transition duration-300">
+                    &larr; Back to Home
+                </button>
+                <h2 class="text-3xl font-bold text-midnight-blue mb-4">${title}</h2>
+                <p class="text-lg text-warm-black">${content}</p>
+            `;
+        }
+
+        // Define renderNotFoundPage
+        function renderNotFoundPage() {
+            renderPlaceholderPage('Page Not Found', 'The requested SOP or page could not be found.');
+        }
+
+        // Function to handle navigation
+        function navigateTo(page, sopId = null) {
+            console.log('Navigating to:', page, 'with SOP ID:', sopId);
+            const appContent = document.getElementById('app-content');
+            // Update the hash only if it's a new page or SOP detail
+            const newHash = page + (sopId ? `-${sopId}` : '');
+            if (window.location.hash.substring(1) !== newHash) {
+                window.location.hash = newHash;
+            }
+
+            switch (page) {
+                case 'home':
+                    renderHomePage();
+                    break;
+                case 'sops':
+                    renderSopsPage();
+                    break;
+                case 'sop-detail':
+                    console.log('Attempting to render SOP detail for:', sopId);
+                    renderSopDetailPage(sopId);
+                    break;
+                case 'forms':
+                    renderPlaceholderPage('Low Risk Forms', 'This page will contain forms for low-risk situations. Data will be added here later.');
+                    break;
+                case 'contact':
+                    renderPlaceholderPage('Important Phone Numbers', 'This page will list important phone numbers for the boarding community. Data will be detailed here later.');
+                    break;
+                default:
+                    renderHomePage(); // Fallback to home
+            }
+        }
+
+        // Handle initial load and hash changes
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            console.log('DOMContentLoaded - Initial hash:', hash);
+            if (hash.startsWith('sop-detail-')) {
+                const sopId = hash.substring('sop-detail-'.length);
+                navigateTo('sop-detail', sopId);
+            } else if (hash === 'sops') {
+                navigateTo('sops');
+            } else if (hash === 'forms') {
+                navigateTo('forms');
+            } else if (hash === 'contact') {
+                navigateTo('contact');
+            } else {
+                navigateTo('home');
+            }
         });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            console.log('Hash changed to:', hash);
+            if (hash.startsWith('sop-detail-')) {
+                const sopId = hash.substring('sop-detail-'.length);
+                navigateTo('sop-detail', sopId);
+            } else if (hash === 'sops') {
+                navigateTo('sops');
+            } else if (hash === 'forms') {
+                navigateTo('forms');
+            } else if (hash === 'contact') {
+                navigateTo('contact');
+            } else {
+                navigateTo('home');
+            }
+        });
+
+        // Inside renderSopDetailPage
+        function renderSopDetailPage(sopId) {
+            const [category, sopTitle] = decodeURIComponent(sopId).split('|');
+            console.log('Decoded SOP ID:', { category, sopTitle });
+            const sop = sopsData[category]?.[sopTitle]; // Use optional chaining for safer access
+            console.log('Found SOP object:', sop);
+
+            if (!sop) {
+                console.error('SOP not found for ID:', sopId);
+                renderNotFoundPage();
+                return;
+            }
+
+            let sopDetailHtml = `
+                <button onclick="navigateTo('sops')" class="mb-6 px-4 py-2 bg-saxe-blue text-white-stone rounded-lg shadow hover:bg-midnight-blue transition duration-300">
+                    &larr; Back to SOPs List
+                </button>
+                <h2 class="text-3xl font-bold text-midnight-blue mb-4">${sopTitle}</h2>
+                <p class="text-lg text-warm-black mb-6"><strong>Category:</strong> ${category}</p>
+
+                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
+                    <h3 class="text-2xl font-bold text-scarlet mb-3">Purpose</h3>
+                    <p>${sop.purpose}</p>
+                </div>
+
+                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
+                    <h3 class="text-2xl font-bold text-scarlet mb-3">Scope</h3>
+                    <p>${sop.scope}</p>
+                </div>
+
+                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
+                    <h3 class="text-2xl font-bold text-scarlet mb-3">Defined Roles & Responsibilities</h3>
+                    <ul class="list-disc pl-5">
+            `;
+            for (const role in sop.roles) {
+                sopDetailHtml += `<li><strong>${role}:</strong> ${sop.roles[role]}</li>`;
+            }
+            sopDetailHtml += `
+                    </ul>
+                </div>
+
+                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
+                    <h3 class="text-2xl font-bold text-scarlet mb-3">Step-by-Step Procedures</h3>
+            `;
+            sop.procedures.forEach(proc => {
+                sopDetailHtml += `
+                    <h4 class="text-xl font-semibold text-midnight-blue mt-4 mb-2">${proc.heading}</h4>
+                    <p>${proc.details}</p>
+                `;
+            });
+            sopDetailHtml += `</div>`;
+
+            appContent.innerHTML = sopDetailHtml;
+        }
     </script>
 </body>
 </html>
