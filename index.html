@@ -52,46 +52,70 @@
         .hover-scale:hover {
             transform: scale(1.03);
         }
-        .sop-link {
-            display: block;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background-color: #EDE8E3; /* White Stone */
+        /* SOP List Item Styling */
+        .sop-item {
+            border: 1px solid #D1D5DB; /* Light gray border */
             border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-            color: #0D0A0A;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .sop-link:hover {
-            background-color: #82ADBF; /* Saxe Blue */
-            transform: translateX(5px);
+        .sop-header {
+            padding: 1rem;
+            background-color: #EDE8E3; /* White Stone */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease-in-out;
         }
-        .sop-link h3 {
+        .sop-header:hover {
+            background-color: #E0DCD7; /* Slightly darker white stone on hover */
+        }
+        .sop-header h3 {
             color: #001733; /* Midnight Blue */
             font-size: 1.125rem;
+            font-family: 'Instrument Sans', sans-serif;
+            margin: 0;
         }
-        .sop-link p {
-            font-size: 0.875rem;
-            color: #0D0A0A;
+        .sop-header .toggle-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+            transition: transform 0.2s ease-in-out;
         }
-        .sop-detail-section h2 {
+        .sop-header.active .toggle-icon {
+            transform: rotate(90deg); /* Rotate for expanded state */
+        }
+        .sop-content {
+            padding: 1rem;
+            background-color: #F9FAFB; /* Lighter background for content */
+            border-top: 1px solid #E5E7EB; /* Separator line */
+        }
+        .sop-content.hidden {
+            display: none;
+        }
+        .sop-detail-section h4 {
             color: #CF082B; /* Scarlet */
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            font-family: 'Instrument Sans', sans-serif;
         }
-        .sop-detail-section h3 {
+        .sop-detail-section h5 {
             color: #001733; /* Midnight Blue */
             margin-top: 1rem;
             margin-bottom: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            font-family: 'Instrument Sans', sans-serif;
         }
         .sop-detail-section p, .sop-detail-section ul {
             margin-bottom: 1rem;
             line-height: 1.6;
+            font-size: 0.95rem;
         }
         .sop-detail-section ul {
             list-style-type: disc;
-            margin-left: 1.25rem;
+            margin-left: 1.5rem;
         }
     </style>
 </head>
@@ -374,7 +398,7 @@
                     roles: {
                         "Reporting Individual (Staff/Student)": "Identifies and reports damage promptly.",
                         "House Director": "Receives reports, assesses severity, logs with facilities, communicates with students/parents regarding accountability.",
-                        "Facilities Department": "Assesses damage, schedules and completes repairs, provides cost estimates.",
+                        "Facilities Department": "Assesses damage, schedules and and completes repairs, provides cost estimates.",
                         "Director of Boarding": "Oversees significant damage cases, ensures consistency in accountability."
                     },
                     procedures: [
@@ -432,6 +456,112 @@
             }
         };
 
+        // Function to render the home page
+        function renderHomePage() {
+            const appContent = document.getElementById('app-content');
+            appContent.innerHTML = `
+                <section class="text-center py-8">
+                    <h2 class="text-4xl font-bold text-midnight-blue mb-4">Welcome to the Boarding Community Hub</h2>
+                    <p class="text-lg text-warm-black">Your quick reference guide for essential boarding information.</p>
+                </section>
+
+                <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="tile-bg-1 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="navigateTo('sops')">
+                        <h3 class="text-3xl font-bold mb-2">SOPs</h3>
+                        <p class="text-lg">Standard Operating Procedures</p>
+                    </div>
+                    <div class="tile-bg-2 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="navigateTo('forms')">
+                        <h3 class="text-3xl font-bold mb-2">Low Risk Forms</h3>
+                        <p class="text-lg">(Data to be added later)</p>
+                    </div>
+                    <div class="tile-bg-3 text-white-stone p-6 rounded-lg shadow-xl flex flex-col items-center justify-center text-center hover-scale transition duration-300 cursor-pointer" onclick="navigateTo('contact')">
+                        <h3 class="text-3xl font-bold mb-2">Important Phone Numbers</h3>
+                        <p class="text-lg">(Data to be detailed later)</p>
+                    </div>
+                </section>
+            `;
+        }
+
+        // Function to generate SOP detail HTML
+        function generateSopDetailHtml(sop) {
+            let detailHtml = `
+                <div class="sop-detail-section">
+                    <h4 class="text-2xl font-bold text-scarlet mb-3">Purpose</h4>
+                    <p>${sop.purpose}</p>
+                </div>
+
+                <div class="sop-detail-section">
+                    <h4 class="text-2xl font-bold text-scarlet mb-3">Scope</h4>
+                    <p>${sop.scope}</p>
+                </div>
+
+                <div class="sop-detail-section">
+                    <h4 class="text-2xl font-bold text-scarlet mb-3">Defined Roles & Responsibilities</h4>
+                    <ul class="list-disc pl-5">
+            `;
+            for (const role in sop.roles) {
+                detailHtml += `<li><strong>${role}:</strong> ${sop.roles[role]}</li>`;
+            }
+            detailHtml += `
+                    </ul>
+                </div>
+
+                <div class="sop-detail-section">
+                    <h4 class="text-2xl font-bold text-scarlet mb-3">Step-by-Step Procedures</h4>
+            `;
+            sop.procedures.forEach(proc => {
+                detailHtml += `
+                    <h5 class="text-xl font-semibold text-midnight-blue mt-4 mb-2">${proc.heading}</h5>
+                    <p>${proc.details}</p>
+                `;
+            });
+            detailHtml += `</div>`;
+            return detailHtml;
+        }
+
+        // Function to toggle SOP detail visibility
+        function toggleSopDetail(sopId) {
+            const sopContent = document.getElementById(`sop-content-${sopId}`);
+            const sopHeader = document.getElementById(`sop-header-${sopId}`);
+            const toggleIcon = sopHeader.querySelector('.toggle-icon');
+
+            if (sopContent && sopHeader && toggleIcon) {
+                sopContent.classList.toggle('hidden');
+                sopHeader.classList.toggle('active');
+                toggleIcon.textContent = sopContent.classList.contains('hidden') ? '+' : '−'; // Unicode minus sign
+            }
+        }
+
+        // Function to render the SOPs list page with expandable details
+        function renderSopsPage() {
+            const appContent = document.getElementById('app-content');
+            let sopListHtml = `
+                <h2 class="text-3xl font-bold text-midnight-blue mb-6">Standard Operating Procedures (SOPs)</h2>
+                <div class="space-y-4">
+            `;
+
+            for (const category in sopsData) {
+                sopListHtml += `<h3 class="text-2xl font-bold text-scarlet mt-6 mb-3">${category}</h3>`;
+                for (const sopTitle in sopsData[category]) {
+                    const sopId = encodeURIComponent(category + "|" + sopTitle);
+                    const sop = sopsData[category][sopTitle];
+                    sopListHtml += `
+                        <div class="sop-item">
+                            <div id="sop-header-${sopId}" class="sop-header" onclick="toggleSopDetail('${sopId}')">
+                                <h3>${sopTitle}</h3>
+                                <span class="toggle-icon">+</span>
+                            </div>
+                            <div id="sop-content-${sopId}" class="sop-content hidden">
+                                ${generateSopDetailHtml(sop)}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            sopListHtml += `</div>`;
+            appContent.innerHTML = sopListHtml;
+        }
+
         // Function to render placeholder pages (including a basic not found)
         function renderPlaceholderPage(title, content) {
             const appContent = document.getElementById('app-content');
@@ -446,14 +576,14 @@
 
         // Define renderNotFoundPage
         function renderNotFoundPage() {
-            renderPlaceholderPage('Page Not Found', 'The requested SOP or page could not be found.');
+            renderPlaceholderPage('Page Not Found', 'The requested page could not be found.');
         }
 
         // Function to handle navigation
         function navigateTo(page, sopId = null) {
             console.log('Navigating to:', page, 'with SOP ID:', sopId);
             const appContent = document.getElementById('app-content');
-            // Update the hash only if it's a new page or SOP detail
+            // Update the hash only if it's a new page or SOP detail (though SOP detail is now handled internally)
             const newHash = page + (sopId ? `-${sopId}` : '');
             if (window.location.hash.substring(1) !== newHash) {
                 window.location.hash = newHash;
@@ -466,10 +596,7 @@
                 case 'sops':
                     renderSopsPage();
                     break;
-                case 'sop-detail':
-                    console.log('Attempting to render SOP detail for:', sopId);
-                    renderSopDetailPage(sopId);
-                    break;
+                // No longer need a separate 'sop-detail' case as it's handled by toggleSopDetail
                 case 'forms':
                     renderPlaceholderPage('Low Risk Forms', 'This page will contain forms for low-risk situations. Data will be added here later.');
                     break;
@@ -485,9 +612,14 @@
         window.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash.substring(1);
             console.log('DOMContentLoaded - Initial hash:', hash);
+            // If the hash is for a specific SOP detail, navigate to SOPs page and then try to open that SOP
             if (hash.startsWith('sop-detail-')) {
                 const sopId = hash.substring('sop-detail-'.length);
-                navigateTo('sop-detail', sopId);
+                navigateTo('sops'); // Go to SOPs list first
+                // Use a small timeout to ensure the SOPs page is rendered before trying to open the detail
+                setTimeout(() => {
+                    toggleSopDetail(sopId);
+                }, 100);
             } else if (hash === 'sops') {
                 navigateTo('sops');
             } else if (hash === 'forms') {
@@ -504,7 +636,10 @@
             console.log('Hash changed to:', hash);
             if (hash.startsWith('sop-detail-')) {
                 const sopId = hash.substring('sop-detail-'.length);
-                navigateTo('sop-detail', sopId);
+                navigateTo('sops'); // Go to SOPs list first
+                setTimeout(() => {
+                    toggleSopDetail(sopId);
+                }, 100);
             } else if (hash === 'sops') {
                 navigateTo('sops');
             } else if (hash === 'forms') {
@@ -515,61 +650,6 @@
                 navigateTo('home');
             }
         });
-
-        // Inside renderSopDetailPage
-        function renderSopDetailPage(sopId) {
-            const [category, sopTitle] = decodeURIComponent(sopId).split('|');
-            console.log('Decoded SOP ID:', { category, sopTitle });
-            const sop = sopsData[category]?.[sopTitle]; // Use optional chaining for safer access
-            console.log('Found SOP object:', sop);
-
-            if (!sop) {
-                console.error('SOP not found for ID:', sopId);
-                renderNotFoundPage();
-                return;
-            }
-
-            let sopDetailHtml = `
-                <button onclick="navigateTo('sops')" class="mb-6 px-4 py-2 bg-saxe-blue text-white-stone rounded-lg shadow hover:bg-midnight-blue transition duration-300">
-                    &larr; Back to SOPs List
-                </button>
-                <h2 class="text-3xl font-bold text-midnight-blue mb-4">${sopTitle}</h2>
-                <p class="text-lg text-warm-black mb-6"><strong>Category:</strong> ${category}</p>
-
-                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
-                    <h3 class="text-2xl font-bold text-scarlet mb-3">Purpose</h3>
-                    <p>${sop.purpose}</p>
-                </div>
-
-                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
-                    <h3 class="text-2xl font-bold text-scarlet mb-3">Scope</h3>
-                    <p>${sop.scope}</p>
-                </div>
-
-                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
-                    <h3 class="text-2xl font-bold text-scarlet mb-3">Defined Roles & Responsibilities</h3>
-                    <ul class="list-disc pl-5">
-            `;
-            for (const role in sop.roles) {
-                sopDetailHtml += `<li><strong>${role}:</strong> ${sop.roles[role]}</li>`;
-            }
-            sopDetailHtml += `
-                    </ul>
-                </div>
-
-                <div class="sop-detail-section p-6 rounded-lg shadow-md bg-white-stone mb-6">
-                    <h3 class="text-2xl font-bold text-scarlet mb-3">Step-by-Step Procedures</h3>
-            `;
-            sop.procedures.forEach(proc => {
-                sopDetailHtml += `
-                    <h4 class="text-xl font-semibold text-midnight-blue mt-4 mb-2">${proc.heading}</h4>
-                    <p>${proc.details}</p>
-                `;
-            });
-            sopDetailHtml += `</div>`;
-
-            appContent.innerHTML = sopDetailHtml;
-        }
     </script>
 </body>
 </html>
