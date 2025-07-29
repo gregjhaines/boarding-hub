@@ -260,7 +260,7 @@
                     <li><a href="#home" class="hover:text-scarlet transition duration-300">Home</a></li>
                     <li><a href="#sops" class="hover:text-scarlet transition duration-300">SOPs</a></li>
                     <li><a href="#forms" class="hover:text-scarlet transition duration-300">Forms</a></li>
-                    <li><a href="#contact" class="hover:text-scarlet transition duration-300">Contact</a></li>
+                    <li><a href="after-hours-contacts.html" class="hover:text-scarlet transition duration-300">Contact</a></li>
                     <li><a href="suicide-protocol.html" class="hover:text-scarlet transition duration-300">Suicide Protocol</a></li>
                 </ul>
             </nav>
@@ -733,20 +733,19 @@
                         </section>
                     `;
                     break;
-                case '#contact':
-                    appContent.innerHTML = `
-                        <section id="contact-section" class="mb-12">
-                            <h2 class="text-3xl font-bold text-midnight-blue mb-6 text-center">Contact Us</h2>
-                            <p class="text-lg text-warm-black mb-4">If you need to get in touch with the boarding staff, please use the following contacts:</p>
-                            <div class="bg-white p-6 rounded-lg shadow-md">
-                                <p class="text-warm-black mb-2"><strong>Director of Boarding:</strong> John Doe - <a href="tel:+641234567" class="text-saxe-blue hover:underline">+64 1 234 567</a></p>
-                                <p class="text-warm-black mb-2"><strong>Girls' House Director:</strong> Jane Smith - <a href="tel:+641234568" class="text-saxe-blue hover:underline">+64 1 234 568</a></p>
-                                <p class="text-warm-black mb-2"><strong>Boys' House Director:</strong> Peter Jones - <a href="tel:+641234569" class="text-saxe-blue hover:underline">+64 1 234 569</a></p>
-                                <p class="text-warm-black mb-2"><strong>Health Centre:</strong> <a href="tel:+641234570" class="text-saxe-blue hover:underline">+64 1 234 570</a></p>
-                                <p class="text-warm-black mt-4">For **after-hours emergencies**, please refer to the <a href="after-hours-contacts.html" class="text-scarlet hover:underline font-bold">After-Hours Contacts page</a>.</p>
-                            </div>
-                        </section>
-                    `;
+                case 'after-hours-contacts.html': // This case will handle the external file fetch
+                    try {
+                        const response = await fetch('after-hours-contacts.html');
+                        if (response.ok) {
+                            const html = await response.text();
+                            appContent.innerHTML = `<div class="after-hours-contacts-container">${html}</div>`; // Wrap in a container for styling if needed
+                        } else {
+                            appContent.innerHTML = `<p class="text-red-500 text-center py-10">Failed to load After-Hours Contacts content. Error: ${response.status}</p>`;
+                        }
+                    } catch (error) {
+                        console.error('Error loading after-hours-contacts.html:', error);
+                        appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading After-Hours Contacts content.</p>`;
+                    }
                     break;
                 case 'suicide-protocol.html': // This case will handle the external file fetch
                     try {
@@ -760,20 +759,6 @@
                     } catch (error) {
                         console.error('Error loading suicide-protocol.html:', error);
                         appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading Suicide Protocol content.</p>`;
-                    }
-                    break;
-                case 'after-hours-contacts.html': // This case will handle the external file fetch
-                    try {
-                        const response = await fetch('after-hours-contacts.html');
-                        if (response.ok) {
-                            const html = await response.text();
-                            appContent.innerHTML = `<div class="after-hours-contacts-container">${html}</div>`; // Wrap in a container for styling if needed
-                        } else {
-                            appContent.innerHTML = `<p class="text-red-500 text-center py-10">Failed to load After-Hours Contacts content. Error: ${response.status}</p>`;
-                        }
-                    } catch (error) {
-                        console.error('Error loading after-hours-contacts.html:', error);
-                        appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading After-Hours Contacts content.</p>`;
                     }
                     break;
                 default:
