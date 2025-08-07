@@ -597,56 +597,36 @@
         };
 
         // Function to render SOPs
-        function renderSOPs() {
-            const appContent = document.getElementById('app-content');
-            appContent.innerHTML = `
-                <section id="sops-section" class="mb-12">
-                    <h2 class="text-3xl font-bold text-midnight-blue mb-6 text-center">Standard Operating Procedures (SOPs)</h2>
-                    <div id="sop-list" class="space-y-4"></div>
-                </section>
-            `;
-            const sopList = document.getElementById('sop-list');
+                function renderSOPDetails(container, sopDetails) {
+            let detailsHtml = `<p>${sopDetails.purpose}</p>`;
 
-            for (const category in sopsData) {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'mb-8';
-                categoryDiv.innerHTML = `<h3 class="text-2xl font-bold text-scarlet mb-4">${category}</h3>`;
-                sopList.appendChild(categoryDiv);
+            // Roles section
+            detailsHtml += `<div class="sop-detail-section"><h4>Roles & Responsibilities</h4><ul class="list-disc ml-6 mt-2">`;
+            for (const role in sopDetails.roles) {
+                detailsHtml += `<li><strong>${role}:</strong> ${sopDetails.roles[role]}</li>`;
+            }
+            detailsHtml += `</ul></div>`;
 
-                for (const sopTitle in sopsData[category]) {
-                    const sop = sopsData[category][sopTitle];
-                    const sopItem = document.createElement('div');
-                    sopItem.className = 'sop-item rounded-lg shadow-md transition-all duration-300 ease-in-out';
-                    sopItem.innerHTML = `
-                        <div class="sop-header flex justify-between items-center p-4 rounded-t-lg">
-                            <h3 class="text-midnight-blue font-semibold">${sopTitle}</h3>
-                            <span class="toggle-icon text-midnight-blue">+</span> <!-- Plus sign -->
-                        </div>
-                        <div class="sop-content hidden p-4">
-                            <div class="sop-detail-section">
-                                <h4>Purpose</h4>
-                                <p>${sop.purpose}</p>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Scope</h4>
-                                <p>${sop.scope}</p>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Roles & Responsibilities</h4>
-                                <ul>
-                                    ${Object.entries(sop.roles).map(([role, desc]) => `<li><strong>${role}:</strong> ${desc}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Procedures</h4>
-                                ${sop.procedures.map(proc => `
-                                    <h5>${proc.heading}</h5>
-                                    <p>${proc.details}</p>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                    sopList.appendChild(sopItem);
+            // Procedures section
+            detailsHtml += `<div class="sop-detail-section"><h4>Procedures</h4>`;
+            sopDetails.procedures.forEach(procedure => {
+                detailsHtml += `<h5>${procedure.heading}</h5>`;
+
+                // Split the details string into sentences
+                const sentences = procedure.details.split('. ').filter(sentence => sentence.trim() !== '');
+
+                // Create a bulleted list from the sentences
+                detailsHtml += `<ul class="list-disc ml-6">`;
+                sentences.forEach(sentence => {
+                    detailsHtml += `<li>${sentence.trim()}.</li>`;
+                });
+                detailsHtml += `</ul>`;
+            });
+            detailsHtml += `</div>`;
+
+            container.innerHTML = detailsHtml;
+        }
+
 
                     // Add event listener for toggling
                     sopItem.querySelector('.sop-header').addEventListener('click', function() {
@@ -813,3 +793,4 @@
     </script>
 </body>
 </html>
+
