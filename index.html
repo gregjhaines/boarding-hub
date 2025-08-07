@@ -283,7 +283,7 @@
         const sopsData = {
             "I. Digital Device Management": {
                 "SOP 1.1: Digital Device Hand in": {
-                    Purpose: "To ensure consistent enforcement of digital device curfews to promote healthy sleep habits, reduce distractions during study, and foster in-person social interaction.",
+                    purpose: "To ensure consistent enforcement of digital device curfews to promote healthy sleep habits, reduce distractions during study, and foster in-person social interaction.",
                     scope: "All boarding students and duty staff in all boarding houses.",
                     roles: {
                         "House Directors": "Oversee enforcement, communicate rules, and manage consequences.",
@@ -291,8 +291,8 @@
                         "Students": "Responsible for adhering to the curfew and submitting devices as required."
                     },
                     procedures: [
-                        { heading: "Hand in Communication", details: "At the start of each term, House Directors clearly communicate digital device hand-in times and procedures to all students (e.g., via house meeting, notice board, and Cube Contract). Specific times for different year levels - Year 8 and 9: 8:00 PM, Year 10: 8:45 PM, Year 11: 9.00 PM." },
-                        { heading: "Device Collection/Monitoring", details: At the designated curfew time, students place all personal digital devices (phones, tablets, gaming devices) in a designated, secure collection point in their house (e.g., locked cabinet in common room or House Office). Duty Staff supervise the collection process, ensuring all students comply. Devices are returned at a specified time the following morning (e.g., 7:00 AM)." },
+                        { heading: "Hand in Communication", details: "At the start of each term, House Directors clearly communicate digital device hand in times and procedures to all students (e.g., via house meeting, notice board, and Cube Contract). Specific times for different year levels - Year 8 and 9: 8:00 PM, Year 10: 8:45 PM, Year 11: 9.00 PM." },
+                        { heading: "Device Collection/Monitoring", details: "At the designated curfew time, students place all personal digital devices (phones, tablets, gaming devices) in a designated, secure collection point in their house (e.g., locked cabinet in common room or House Office). Duty Staff supervise the collection process, ensuring all students comply. Devices are returned at a specified time the following morning (e.g., 7:00 AM)." },
                         { heading: "Monitoring During Study Periods (Prep)", details: "During designated prep times, recreational digital device use is strictly prohibited. Duty Staff actively supervise prep areas, ensuring students are using devices only for academic purposes." },
                         { heading: "Consequences for Non-Compliance", details: "First Offence: Device confiscated for 24 hours, warning issued, recorded in REACH Duty Report/Pastoral Note. Second Offence: Device confiscated for 3 days, parent/caregiver informed, recorded in REACH. Third Offence: Device confiscated for 1 week, meeting with House Director and student, parent/caregiver informed, recorded in REACH, potential further disciplinary action as per Disciplinary Consequences Policy. Repeated non-compliance may lead to permanent device restrictions or other disciplinary measures." },
                         { heading: "Reporting", details: "All instances of non-compliance and subsequent actions are logged in the Duty Report/Pastoral Note on REACH." },
@@ -323,7 +323,7 @@
             },
             "II. Emergency & Crisis Management": {
                 "SOP 2.1: Emergency Evacuation Protocol": {
-                    Purpose: "To ensure the safe and orderly evacuation of all students and staff from boarding houses in the event of an emergency (e.g., fire, earthquake, gas leak).",
+                    purpose: "To ensure the safe and orderly evacuation of all students and staff from boarding houses in the event of an emergency (e.g., fire, earthquake, gas leak).",
                     scope: "All boarding staff, students, and visitors within boarding houses.",
                     roles: {
                         "House Director (or Senior Duty Staff)": "Overall command, initiates evacuation, ensures all areas are checked, accounts for all individuals.",
@@ -335,31 +335,31 @@
                         { heading: "Alarm Activation/Notification", details: "Upon hearing the fire alarm or receiving an evacuation instruction (e.g., from House Director, School Management, Emergency Services), all staff and students must immediately initiate evacuation." },
                         { heading: "Immediate Action", details: "Staff: Direct students to exit calmly and quickly via the nearest safe exit. Do not stop to collect personal belongings. Assist any students with mobility issues or special needs. Conduct a quick visual sweep of assigned areas (e.g., common rooms, corridors, bathrooms) to ensure no one is left behind, but do not re-enter a burning building. Students: Exit immediately and calmly. Follow staff instructions. Do not run or push." },
                         { heading: "Proceed to Assembly Point", details: "All individuals proceed directly to the designated assembly point for their house (clearly marked on evacuation plans). Walk, do not run." },
-                        { heading: "Roll Call & Accountability", details: "The House Director (or Senior Duty Staff) takes a physical roll call of all students present at the assembly point using the most up-to-date roll on REACH. Duty Staff report to the House Director on their sweep results and any missing individuals. Any unaccounted individuals are immediately reported to the Director of Boarding and/or emergency services." },
-                        { heading: "Await Further Instructions", details: "Remain at the assembly point until an 'all clear' is given by the House Director, Director of Boarding, or Emergency Services. Do not re-enter the building until authorised." },
-                        { heading: "Communication Protocols", details: "Internal: House Director immediately notifies Director of Boarding and School Management upon evacuation. External: The Director of Boarding/School Management liaises with emergency services (111). Parents/caregivers will be informed via standard school communication channels once safety and accountability are confirmed." },
-                        { heading: "Required Documentation/Record Keeping", details: "Evacuation Drill Log (date, time, duration, observations) through the Duty Report on REACH. Record in the Duty report on REACH for actual emergency evacuations." },
+                        { heading: "Roll Call & Accountability", details: "House Director (or Senior Duty Staff) takes a physical roll call of all students present at the assembly point using the most up-to-date roll. Duty Staff report to the House Director on their sweep results and any missing individuals. Any unaccounted individuals are immediately reported to the Director of Boarding and/or emergency services." },
+                        { heading: "Await Further Instructions", details: "Remain at the assembly point until an 'all clear' is given by the House Director, Director of Boarding, or Emergency Services. Do not re-enter the building until authorized." },
+                        { heading: "Communication Protocols", details: "Internal: House Director immediately notifies Director of Boarding and School Management upon evacuation. External: Director of Boarding/School Management liaises with emergency services (111). Parents/caregivers will be informed via standard school communication channels once safety and accountability are confirmed." },
+                        { heading: "Required Documentation/Record Keeping", details: "Evacuation Drill Log (date, time, duration, observations). Incident Report Form for any actual emergency evacuations. Updated student rolls (physical copy at assembly point and digital backup)." },
                         { heading: "Review Cycle", details: "Annual mandatory drills, and review of procedures after each drill or actual event." },
                         { heading: "Relevant Policy Cross-Reference", details: "Evacuation Policy, Hazards + Safety Policy." }
                     ]
                 },
                 "SOP 2.2: Missing Boarding Student Protocol": {
-                    Purpose: "To establish a rapid and systematic response protocol for any student discovered to be missing from the boarding house or school grounds when they should be present.",
+                    purpose: "To establish a rapid and systematic response protocol for any student discovered to be missing from the boarding house or school grounds when they should be present.",
                     scope: "All boarding staff, School Management, and Emergency Services.",
                     roles: {
-                        "Duty Staff (Initial Responder)": "Initiates immediate checks, reports to the House Director.",
-                        "House Director": "Leads initial search, coordinates staff, notifies the Director of Boarding, liaises with parents/caregivers.",
-                        "Director of Boarding": "Notifies Campus Principal, Head of School, Police (if necessary), coordinates wider school search, manages external communication.",
+                        "Duty Staff (Initial Responder)": "Initiates immediate checks, reports to House Director.",
+                        "House Director": "Leads initial search, coordinates staff, notifies Director of Boarding, liaises with parents/caregivers.",
+                        "Director of Boarding": "Notifies Campus Principal, Police (if necessary), coordinates wider school search, manages external communication.",
                         "School Management": "Supports search efforts, manages media (if applicable)."
                     },
                     procedures: [
-                        { heading: "Initial Discovery (Duty Staff)", details: "Immediately upon discovering a student is missing from a required location (e.g., roll call, prep, lights out, designated area), the Duty Staff member conducts an immediate, thorough check of the student's room, common areas, and immediate house vicinity. Check if the student has signed out via REACH or has authorised leave. Attempt to contact the student via their mobile phone (if permitted)." },
-                        { heading: "Notification to House Director", details: "If the student cannot be immediately located or accounted for within 20 minutes, the Duty Staff member immediately notifies the House Director." },
-                        { heading: "House Director's Immediate Actions", details: "The House Director takes charge. Confirms all initial checks have been made. Initiates a systematic search of the entire boarding house, including all rooms, bathrooms, common areas, and immediate outdoor areas around the house. Assigns specific staff members to search designated zones. Checks the student's recent activity (e.g., last known location, friends they were with). Reviews CCTV footage if available and relevant." },
-                        { heading: "Notification to Director of Boarding", details: "If the student is not located within 40 minutes of the initial discovery, the House Director immediately notifies the Director of Boarding." },
-                        { heading: "Director of Boarding's Actions", details: "Director of Boarding takes command of the search. Notifies the Campus Principal and Head of School. Decides whether to involve the Police immediately based on risk assessment (e.g., age of student, known vulnerabilities, suspicious circumstances, duration missing). Generally, Police should be contacted without undue delay if the student's safety is a concern. Coordinates a wider school search, involving additional staff if necessary (e.g., Security, other House Directors). Liaises with parents/caregivers, informing them of the situation and actions being taken. Maintain regular contact." },
+                        { heading: "Initial Discovery (Duty Staff)", details: "Immediately upon discovering a student is missing from a required location (e.g., roll call, prep, lights out, designated area), the Duty Staff member conducts an immediate, thorough check of the student's room, common areas, and immediate house vicinity. Check if the student has signed out via REACH or has authorized leave. Attempt to contact the student via their mobile phone (if permitted)." },
+                        { heading: "Notification to House Director", details: "If the student cannot be immediately located or accounted for within 5 minutes, the Duty Staff member immediately notifies the House Director." },
+                        { heading: "House Director's Immediate Actions", details: "House Director takes charge. Confirms all initial checks have been made. Initiates a systematic search of the entire boarding house, including all rooms, bathrooms, common areas, and immediate outdoor areas around the house. Assigns specific staff members to search designated zones. Checks the student's recent activity (e.g., last known location, friends they were with). Reviews CCTV footage if available and relevant." },
+                        { heading: "Notification to Director of Boarding", details: "If the student is not located within 15 minutes of the initial discovery, the House Director immediately notifies the Director of Boarding." },
+                        { heading: "Director of Boarding's Actions", details: "Director of Boarding takes command of the search. Notifies the Campus Principal. Decides whether to involve Police immediately based on risk assessment (e.g., age of student, known vulnerabilities, suspicious circumstances, duration missing). Generally, Police should be contacted without undue delay if the student's safety is a concern. Coordinates a wider school search, involving additional staff if necessary (e.g., Security, other House Directors). Liaises with parents/caregivers, informing them of the situation and actions being taken. Maintain regular contact." },
                         { heading: "Police Involvement (if required)", details: "If Police are contacted, provide all available information: student's name, description, last known location, circumstances, any known vulnerabilities or concerns. Cooperate fully with Police instructions." },
-                        { heading: "Resolution & Debrief", details: "Once the student is located, ensure their safety and well-being. Conduct a debrief with the student and relevant staff to understand the circumstances and implement preventative measures. Complete a detailed incident report as a Pastoral Note on REACH" },
+                        { heading: "Resolution & Debrief", details: "Once the student is located, ensure their safety and well-being. Conduct a debrief with the student and relevant staff to understand the circumstances and implement preventative measures. Complete a detailed incident report." },
                         { heading: "Communication Protocols", details: "Internal: Immediate escalation from Duty Staff -> House Director -> Director of Boarding -> Campus Principal. External: Director of Boarding/Campus Principal communicates with parents/caregivers. Police contacted as per risk assessment. Media managed by School Management only." },
                         { heading: "Required Documentation/Record Keeping", details: "Missing Boarding Students Incident Report Form. Log of all actions taken, times, and individuals involved. REACH entry for the incident." },
                         { heading: "Review Cycle", details: "Annually, and after any actual missing student incident." },
@@ -369,7 +369,7 @@
             },
             "III. Daily Routines & Transitions": {
                 "SOP 3.1: Daily Roll Call Procedure": {
-                    Purpose: "To accurately account for all boarding students at designated times, ensuring their safety and presence within the boarding community.",
+                    purpose: "To accurately account for all boarding students at designated times, ensuring their safety and presence within the boarding community.",
                     scope: "All boarding students and duty staff in all boarding houses.",
                     roles: {
                         "Duty Staff": "Conducts roll calls, records attendance, identifies and reports missing students.",
@@ -377,8 +377,8 @@
                         "Students": "Must be present and respond to their name at all scheduled roll calls."
                     },
                     procedures: [
-                        { heading: "Preparation", details: "Duty Staff ensure they have the most current student roll for their house (digital via REACH). Be present at the designated roll call location at least 5 minutes prior to the scheduled time." },
-                        { heading: "Conducting Roll Call", details: "At the precise scheduled time (8:00 AM and 6:00 PM - 6:30 PM), announce the start of roll call clearly. Call out each student's name from the roll. Students must respond clearly (e.g., \"Present,\" \"Here\") and be visibly present. Mark attendance accurately in REACH." },
+                        { heading: "Preparation", details: "Duty Staff ensure they have the most current student roll for their house (digital via REACH, and a physical backup). Be present at the designated roll call location at least 5 minutes prior to the scheduled time." },
+                        { heading: "Conducting Roll Call", details: "At the precise scheduled time (e.g., 7:00 AM, 4:00 PM, 9:00 PM), announce the start of roll call clearly. Call out each student's name from the roll. Students must respond clearly (e.g., \"Present,\" \"Here\") and be visibly present. Mark attendance accurately in REACH." },
                         { heading: "Addressing Absences", details: "If a student is not present and does not respond: Immediately mark them as absent. Check REACH for any approved leave (e.g., Day Leave, Sports Leave, Weekend Leave). If approved, mark as \"On Leave.\" If no approved leave is recorded, immediately attempt to locate the student within the immediate vicinity (e.g., common room, bathroom)." },
                         { heading: "Reporting Unaccounted Students", details: "If a student is unaccounted for after 5 minutes of the scheduled roll call time, and no approved leave is found, immediately initiate the \"Missing Boarding Student Protocol\" (SOP 2.2). Notify the House Director immediately." },
                         { heading: "Completion & Documentation", details: "Ensure all attendance is accurately recorded in REACH by the end of the roll call. Any issues or discrepancies are noted in the House Log." },
@@ -813,6 +813,3 @@
     </script>
 </body>
 </html>
-
-
-
