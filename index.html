@@ -618,34 +618,42 @@
                     const sopItem = document.createElement('div');
                     sopItem.className = 'sop-item rounded-lg shadow-md transition-all duration-300 ease-in-out';
                     sopItem.innerHTML = `
-                        <div class="sop-header flex justify-between items-center p-4 rounded-t-lg">
-                            <h3 class="text-midnight-blue font-semibold">${sopTitle}</h3>
-                            <span class="toggle-icon text-midnight-blue">+</span> <!-- Plus sign -->
-                        </div>
-                        <div class="sop-content hidden p-4">
-                            <div class="sop-detail-section">
-                                <h4>Purpose</h4>
-                                <p>${sop.purpose}</p>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Scope</h4>
-                                <p>${sop.scope}</p>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Roles & Responsibilities</h4>
-                                <ul>
-                                    ${Object.entries(sop.roles).map(([role, desc]) => `<li><strong>${role}:</strong> ${desc}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div class="sop-detail-section">
-                                <h4>Procedures</h4>
-                                ${sop.procedures.map(proc => `
-                                    <h5>${proc.heading}</h5>
-                                    <p>${proc.details}</p>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
+    <div class="sop-header flex justify-between items-center p-4 rounded-t-lg">
+        <h3 class="text-midnight-blue font-semibold">${sopTitle}</h3>
+        <span class="toggle-icon text-midnight-blue">+</span> <!-- Plus sign -->
+    </div>
+    <div class="sop-content hidden p-4">
+        <div class="sop-detail-section">
+            <h4>Purpose</h4>
+            <p>${sop.purpose}</p>
+        </div>
+        <div class="sop-detail-section">
+            <h4>Scope</h4>
+            <p>${sop.scope}</p>
+        </div>
+        <div class="sop-detail-section">
+            <h4>Roles & Responsibilities</h4>
+            <ul>
+                ${Object.entries(sop.roles).map(([role, desc]) => `<li><strong>${role}:</strong> ${desc}</li>`).join('')}
+            </ul>
+        </div>
+        <div class="sop-detail-section">
+    <h4>Procedures</h4>
+    <ul class="list-disc ml-6">
+        ${sop.procedures.map(proc => `
+            <li class="mb-2">
+                <span class="font-semibold">${proc.heading}:</span>
+                <ul class="list-disc ml-6">
+                    ${proc.details.split('. ').filter(Boolean).map(
+                        sentence => `<li>${sentence.trim()}${sentence.trim().endsWith('.') ? '' : '.'}</li>`
+                    ).join('')}
+                </ul>
+            </li>
+        `).join('')}
+    </ul>
+</div>
+    </div>
+`;
                     sopList.appendChild(sopItem);
 
                     // Add event listener for toggling
