@@ -863,6 +863,20 @@
                         appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading Suicide Protocol content.</p>`;
                     }
                     break;
+                    case 'suicide-attempt-script.html':
+                    try {
+                        const response = await fetch('suicide-attempt-script.html');
+                        if (response.ok) {
+                            const html = await response.text();
+                            appContent.innerHTML = `<div class="suicide-protocol-container">${html}</div>`; // You can use a new container class if you want
+                    } else {
+                        appContent.innerHTML = `<p class="text-red-500 text-center py-10">Failed to load Self-Harm/Suicide Attempt Script content. Error: ${response.status}</p>`;
+                    }
+                    } catch (error) {
+                    console.error('Error loading suicide-attempt-script.html:', error);
+                    appContent.innerHTML = `<p class="text-red-500 text-center py-10">Error loading Self-Harm/Suicide Attempt Script content.</p>`;
+                }
+                    break;
                 default:
                     renderHome(); // Default to home if hash is not recognized
             }
@@ -915,6 +929,7 @@
     </script>
 </body>
 </html>
+
 
 
 
